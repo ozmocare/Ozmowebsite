@@ -1,26 +1,131 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-navy: #022633;
+  --color-navy-light: #06303f;
+  --color-brand: #ede734;
+  --color-gold: #fcd816;
+  --color-ink: #0a0a0a;
+  --color-card: #151515;
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display);
+  --font-logo: var(--font-logo);
+  --animate-marquee: marquee 30s linear infinite;
+  --animate-marquee-reverse: marquee 30s linear infinite reverse;
+  --animate-pulse-dot: pulse-dot 2.4s ease-in-out infinite;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes pulse-dot {
+    0%,
+    100% {
+      opacity: 0.15;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.45;
+      transform: scale(2.4);
+    }
   }
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #000;
+  color: #fff;
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+
+@layer components {
+  .wrap {
+    @apply mx-auto w-full max-w-[1440px] px-5 md:px-12;
+  }
+  .h-section {
+    @apply font-display font-extrabold text-brand uppercase leading-[1.25] text-[clamp(1.5rem,3.4vw,2.6rem)];
+  }
+  .h-sub {
+    @apply font-display font-extrabold text-brand uppercase leading-[1.25] text-[clamp(1.15rem,2.2vw,1.9rem)];
+  }
+  .lead {
+    @apply text-white/85 text-[clamp(1rem,1.6vw,1.45rem)] leading-relaxed;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md bg-gold px-6 py-3 font-semibold text-black transition hover:brightness-110 active:scale-[0.98] disabled:opacity-60;
+  }
+  .icon-tile {
+    @apply flex h-16 w-16 shrink-0 items-center justify-center rounded-lg bg-navy text-brand;
+  }
+  .field {
+    @apply w-full rounded-md border border-white/5 bg-[#161616] px-4 py-3.5 text-white placeholder:text-white/35 outline-none transition focus:border-brand/70;
+  }
+}
+
+.font-display {
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Faint ring watermark used on the yellow panels */
+.z-mark {
+  position: relative;
+  overflow: hidden;
+}
+.z-mark::before,
+.z-mark::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  border-radius: 9999px;
+  border: 46px solid rgba(0, 0, 0, 0.045);
+}
+.z-mark::before {
+  width: 620px;
+  height: 620px;
+  left: -160px;
+  bottom: -220px;
+}
+.z-mark::after {
+  width: 480px;
+  height: 480px;
+  right: -120px;
+  top: -200px;
+}
+.z-mark > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }

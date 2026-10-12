@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# OZMO Gym website
 
-## Getting Started
+Next.js 16 (App Router) + Tailwind CSS 4. Form submissions are stored in Supabase. Deploys on Vercel.
 
-First, run the development server:
+## Pages
+
+| Route | Content |
+| --- | --- |
+| `/` | Home: hero, services, stats, facilities, transformations, branches + map, testimonials, FAQ, free-trial form |
+| `/franchise` | Franchise pitch, benefits, support, branches, FAQ, franchise enquiry form |
+| `/about` | Stats, Punjab branch map, mission, team, testimonials |
+| `/services/gym` `/yoga` `/kickfit` `/swimming` | Service pages (shared layout in `src/components/ServicePage.tsx`) |
+| `/contact` | Contact form, contact cards, map, branches |
+| `/api/leads` | Receives all three forms and inserts into Supabase |
+
+## Where to edit things
+
+- **Phone, email, address, social links, branches, FAQs, testimonials, stats** → `src/lib/site.ts`
+- **Service page copy** → `src/lib/services.ts`
+- **Team members** → `src/components/Team.tsx`
+- **Colours and fonts** → `src/app/globals.css` and `src/app/layout.tsx`
+- **Photos** → `public/images/` (replace a file with the same name and it updates everywhere)
+
+## Run locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 1. Supabase (form storage)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Create a project at supabase.com.
+2. Open **SQL Editor**, paste the contents of `supabase/schema.sql`, and run it. This creates the `leads` table.
+3. Go to **Project Settings → API** and copy the **Project URL** and the **anon public** key.
+4. For local testing, copy `.env.example` to `.env.local` and paste the two values.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Submissions appear in **Table Editor → leads**. The `type` column says which form it came from (`trial`, `franchise`, `contact`).
 
-## Learn More
+## 2. GitHub
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+git add -A
+git commit -m "OZMO Gym website"
+git branch -M main
+git remote add origin https://github.com/<your-username>/ozmo-gym.git
+git push -u origin main
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 3. Vercel
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. vercel.com → **Add New → Project** → import the GitHub repo.
+2. Under **Environment Variables** add `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
+3. Deploy. Add the custom domain under **Settings → Domains**.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Until the two env vars are set, the forms show "The form is not connected yet" instead of saving.

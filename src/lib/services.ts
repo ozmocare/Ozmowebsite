@@ -1,6 +1,8 @@
 export type ServiceContent = {
   slug: string;
   title: string;
+  /** <title> tag, keyword-focused */
+  seoTitle: string;
   description: string;
   hero: string;
   slides: { src: string; alt: string }[];
@@ -17,7 +19,9 @@ export const services: Record<string, ServiceContent> = {
   gym: {
     slug: "gym",
     title: "Gym",
-    description: "Strength, cardio and functional training zones with equipment from world-leading brands.",
+    seoTitle: "Gym in Ludhiana — Strength & Cardio Training",
+    description:
+      "Train at OZMO, Ludhiana's premium gym chain: strength, cardio and functional zones with Matrix and Aerofit equipment, expert trainers and steam & spa. Open 5 a.m.–11 p.m.",
     hero: "/images/premium-gym.jpg",
     slides: [
       { src: "/images/slide-athlete.jpg", alt: "Athlete training with a resistance band" },
@@ -70,7 +74,9 @@ export const services: Record<string, ServiceContent> = {
   yoga: {
     slug: "yoga",
     title: "Yoga",
-    description: "Guided yoga sessions for flexibility, balance and a calmer mind.",
+    seoTitle: "Yoga Classes in Ludhiana",
+    description:
+      "Yoga classes at OZMO Gym, Ludhiana — guided sessions for flexibility, strength and stress relief, for beginners and regular practitioners. Book a free trial.",
     hero: "/images/franchise-training.jpg",
     slides: [
       { src: "/images/franchise-training.jpg", alt: "Group class" },
@@ -112,7 +118,9 @@ export const services: Record<string, ServiceContent> = {
   kickfit: {
     slug: "kickfit",
     title: "Kickfit",
-    description: "High-energy kickboxing and cross-fit style conditioning classes.",
+    seoTitle: "Kickboxing & Cross-fit Classes in Ludhiana",
+    description:
+      "Kickfit at OZMO Gym, Ludhiana — high-energy kickboxing, HIIT and cross-fit classes with expert coaches. Burn fat and build conditioning. Book a free trial.",
     hero: "/images/franchise-group.jpg",
     slides: [
       { src: "/images/franchise-group.jpg", alt: "Kickfit class" },
@@ -154,7 +162,9 @@ export const services: Record<string, ServiceContent> = {
   swimming: {
     slug: "swimming",
     title: "Swimming",
-    description: "Swimming sessions and coaching for fitness, technique and recovery.",
+    seoTitle: "Swimming Classes in Ludhiana",
+    description:
+      "Swimming at OZMO, Ludhiana — learn-to-swim coaching, lap swimming and aqua fitness, with showers, lockers and steam rooms. Book a free trial.",
     hero: "/images/premium-washroom.jpg",
     slides: [
       { src: "/images/premium-washroom.jpg", alt: "Changing rooms" },

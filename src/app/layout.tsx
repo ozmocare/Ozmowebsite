@@ -1,41 +1,60 @@
-import type { Metadata } from "next";
-import { Archivo_Black, Orbitron, Space_Grotesk } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Inter, Montserrat } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import JsonLd, { organizationSchema } from "@/components/JsonLd";
+import { siteUrl } from "@/lib/site";
 import "./globals.css";
 
-const body = Space_Grotesk({
+const body = Inter({
   variable: "--font-body",
   subsets: ["latin"],
 });
 
-const display = Orbitron({
+const display = Montserrat({
   variable: "--font-display",
+  weight: ["600", "700", "800", "900"],
   subsets: ["latin"],
 });
 
-const logo = Archivo_Black({
-  variable: "--font-logo",
-  weight: "400",
-  subsets: ["latin"],
-});
+export const viewport: Viewport = {
+  themeColor: "#0a0a0a",
+};
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
-    default: "OZMO Gym | Transform body and mind in Ludhiana",
+    default: "OZMO Gym & Spa | Best Gym in Ludhiana, Punjab",
     template: "%s | OZMO Gym",
   },
   description:
-    "OZMO Gym & Spa — 6 branches across Ludhiana, Punjab. Gym, cardio, cross-fit, yoga and swimming with 50+ expert trainers. Sign up for a free 1-day trial.",
+    "OZMO Gym & Spa — premium gyms across Ludhiana and Jagraon with modern equipment, expert trainers, cardio, cross-fit, yoga, swimming, steam and spa. Book a free 1-day trial.",
+  keywords: [
+    "gym in Ludhiana",
+    "best gym in Ludhiana",
+    "gym near me Ludhiana",
+    "OZMO Gym",
+    "gym and spa Ludhiana",
+    "gym franchise Punjab",
+    "fitness centre Ludhiana",
+  ],
+  applicationName: "OZMO Gym",
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    locale: "en_IN",
+    siteName: "OZMO Gym & Spa",
+    url: "/",
+  },
+  twitter: { card: "summary_large_image" },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
-      className={`${body.variable} ${display.variable} ${logo.variable} h-full antialiased`}
-    >
+    <html lang="en-IN" className={`${body.variable} ${display.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
+        <JsonLd data={organizationSchema()} />
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />

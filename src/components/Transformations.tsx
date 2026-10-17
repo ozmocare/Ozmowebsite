@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import Photo from "./Photo";
 import { transformations } from "@/lib/site";
 
 export default function Transformations() {
@@ -16,95 +17,100 @@ export default function Transformations() {
   ];
 
   return (
-    <section className="bg-black py-20 md:py-28">
+    <section className="section overflow-hidden">
       <div className="wrap">
-        <h2 className="h-section text-center">
-          Let&apos;s see our students
-          <br />
-          have transformed
-        </h2>
-
-        <div className="relative mt-14 md:mt-20">
-          <div key={index} className="grid items-center gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-20">
-            <div>
-              <dl className="grid grid-cols-[auto_1fr] gap-x-16 gap-y-3 border-l-4 border-brand pl-6 text-3xl font-bold md:text-4xl">
-                <dt className="text-white/70">Name:</dt>
-                <dd>{t.name}</dd>
-                <dt className="text-white/70">Age:</dt>
-                <dd>{t.age}</dd>
-              </dl>
-
-              <table className="mt-14 w-full max-w-lg text-left">
-                <thead>
-                  <tr className="border-b border-white/30 text-xl text-white/70">
-                    <th className="pb-6 font-bold">
-                      <span className="inline-block border border-white px-5 py-2.5 text-white">{t.duration}</span>
-                    </th>
-                    <th className="pb-6 font-bold">Before</th>
-                    <th className="pb-6 font-bold">After</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {rows.map((r) => (
-                    <tr key={r.label}>
-                      <th className="pt-10 text-xl font-bold text-white/70">{r.label}</th>
-                      {r.values.map((v, i) => (
-                        <td key={i} className="pt-10 font-display text-3xl">
-                          {v}
-                          <span className="ml-1 font-sans text-lg font-bold text-white/70">{r.unit}</span>
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <div>
+            <p className="eyebrow">Real results</p>
+            <h2 className="h2 mt-4">Transformations at OZMO</h2>
+          </div>
+          {count > 1 && (
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => go(-1)}
+                aria-label="Previous transformation"
+                className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 transition hover:border-brand hover:bg-brand hover:text-ink"
+              >
+                <ChevronLeft />
+              </button>
+              <button
+                type="button"
+                onClick={() => go(1)}
+                aria-label="Next transformation"
+                className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 transition hover:border-brand hover:bg-brand hover:text-ink"
+              >
+                <ChevronRight />
+              </button>
             </div>
+          )}
+        </div>
 
-            <div className="grid grid-cols-2 gap-4 md:gap-8">
-              {[
-                { src: t.before, label: "Before" },
-                { src: t.after, label: "After" },
-              ].map((p) => (
-                <figure key={p.label}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={p.src} alt={`${t.name} ${p.label.toLowerCase()}`} className="aspect-[3/4] w-full object-cover" />
-                  <figcaption className="mt-8 text-center font-display text-xl uppercase text-brand md:text-3xl">
-                    {p.label}
-                  </figcaption>
-                </figure>
+        <div key={index} className="mt-12 grid items-center gap-10 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
+          <div className="card p-7 md:p-10">
+            <p className="text-sm font-semibold uppercase tracking-wider text-white/50">Member</p>
+            <p className="mt-1 font-display text-4xl font-black uppercase">
+              {t.name}, <span className="text-white/50">{t.age}</span>
+            </p>
+            <p className="chip mt-5 border-brand text-brand">{t.duration} program</p>
+
+            <dl className="mt-8 space-y-6">
+              {rows.map((r) => (
+                <div key={r.label}>
+                  <dt className="text-sm font-semibold uppercase tracking-wider text-white/50">{r.label}</dt>
+                  <dd className="mt-2 flex items-baseline gap-4 font-display font-black">
+                    <span className="text-3xl text-white/40 line-through decoration-2">
+                      {r.values[0]}
+                      {r.unit}
+                    </span>
+                    <span className="text-white/40">→</span>
+                    <span className="text-5xl text-brand">
+                      {r.values[1]}
+                      <span className="text-2xl">{r.unit}</span>
+                    </span>
+                  </dd>
+                </div>
               ))}
-            </div>
+            </dl>
           </div>
 
-          <button
-            type="button"
-            onClick={() => go(-1)}
-            aria-label="Previous transformation"
-            className="absolute -left-2 top-[38%] flex h-12 w-12 items-center justify-center rounded-full bg-white/15 text-white transition hover:bg-white/30 md:-left-6"
-          >
-            <ChevronLeft />
-          </button>
-          <button
-            type="button"
-            onClick={() => go(1)}
-            aria-label="Next transformation"
-            className="absolute -right-2 top-[38%] flex h-12 w-12 items-center justify-center rounded-full bg-white/15 text-white transition hover:bg-white/30 md:-right-6"
-          >
-            <ChevronRight />
-          </button>
+          <div className="grid grid-cols-2 gap-4">
+            {[
+              { src: t.before, label: "Before" },
+              { src: t.after, label: "After" },
+            ].map((p) => (
+              <figure key={p.label} className="relative">
+                <Photo
+                  src={p.src}
+                  alt={`${t.name} ${p.label.toLowerCase()} training at OZMO`}
+                  sizes="(min-width: 1024px) 30vw, 50vw"
+                  className="aspect-[3/4] rounded-2xl"
+                />
+                <figcaption
+                  className={`absolute left-4 top-4 rounded-full px-4 py-1.5 text-sm font-black uppercase ${
+                    p.label === "After" ? "bg-brand text-ink" : "bg-ink/80 text-white"
+                  }`}
+                >
+                  {p.label}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
         </div>
 
-        <div className="mt-12 flex justify-center gap-3">
-          {transformations.map((_, i) => (
-            <button
-              key={i}
-              type="button"
-              onClick={() => setIndex(i)}
-              aria-label={`Show transformation ${i + 1}`}
-              className={`h-3 w-3 rounded-full transition ${i === index ? "bg-white" : "bg-white/40"}`}
-            />
-          ))}
-        </div>
+        {count > 1 && (
+          <div className="mt-10 flex gap-2">
+            {transformations.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => setIndex(i)}
+                aria-label={`Show transformation ${i + 1}`}
+                className={`h-1.5 rounded-full transition-all ${i === index ? "w-10 bg-brand" : "w-4 bg-white/25"}`}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

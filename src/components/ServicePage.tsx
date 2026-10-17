@@ -1,47 +1,58 @@
 import { Bike, Clock, UserCheck, Users } from "lucide-react";
 import Carousel from "./Carousel";
 import Faq from "./Faq";
+import JsonLd, { breadcrumbSchema } from "./JsonLd";
 import { TrialForm } from "./LeadForms";
+import Marquee from "./Marquee";
 import Reveal from "./Reveal";
-import { FormSection, PageHero, PhotoBg, ShowcaseItem } from "./Sections";
-import Tapes from "./Tapes";
-import Transformations from "./Transformations";
+import { CtaBand, FormSection, ImageCard, PageHero, SectionHeading } from "./Sections";
+import Photo from "./Photo";
 import { amenities, equipmentBrands, type ServiceContent } from "@/lib/services";
-import { homeFaqs } from "@/lib/site";
+import { homeFaqs, openLocations } from "@/lib/site";
 
 const featureIcons = [Bike, UserCheck, Clock, Users];
 
 export default function ServicePage({ service }: { service: ServiceContent }) {
-  const left = service.areas.filter((_, i) => i % 2 === 0);
-  const right = service.areas.filter((_, i) => i % 2 === 1);
-
+  const path = `/services/${service.slug}`;
   return (
     <>
-      <PageHero title={service.title} image={service.hero} />
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: service.title, path },
+        ])}
+      />
+      <PageHero
+        eyebrow="OZMO services"
+        title={
+          <>
+            {service.title} <span className="text-brand">in Ludhiana</span>
+          </>
+        }
+        lead={service.description}
+        image={service.hero}
+        crumbs={[{ name: service.title, href: path }]}
+      />
 
-      <section className="bg-black py-12 md:py-16">
+      <section className="pb-20">
         <div className="wrap">
-          <Carousel images={service.slides} />
+          <Carousel images={service.slides} className="aspect-[16/10] md:aspect-[21/9]" />
         </div>
       </section>
 
-      <Tapes className="bg-black" />
-
-      <section className="bg-black pb-24 pt-6">
+      <section className="section pt-0">
         <div className="wrap">
-          <Reveal>
-            <h2 className="h-section mx-auto max-w-4xl text-center">{service.introTitle}</h2>
-          </Reveal>
-          <ul className="mt-16 grid grid-cols-2 gap-x-6 gap-y-12 lg:grid-cols-4">
+          <SectionHeading eyebrow={`Why ${service.title.toLowerCase()} at OZMO`} title={service.introTitle} />
+          <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {service.features.map((f, i) => {
               const Icon = featureIcons[i % featureIcons.length];
               return (
                 <li key={f}>
-                  <Reveal delay={i * 100} className="flex flex-col items-center text-center">
-                    <span className="icon-tile h-[88px] w-[88px] rounded-xl">
-                      <Icon size={40} strokeWidth={1.6} />
+                  <Reveal delay={i * 90} className="card h-full p-7">
+                    <span className="icon-badge">
+                      <Icon size={24} strokeWidth={2} />
                     </span>
-                    <p className="mt-9 max-w-[18rem] text-lg leading-9 text-white/90 md:text-xl">{f}</p>
+                    <p className="mt-6 text-lg leading-7 text-white/80">{f}</p>
                   </Reveal>
                 </li>
               );
@@ -50,68 +61,31 @@ export default function ServicePage({ service }: { service: ServiceContent }) {
         </div>
       </section>
 
-      {/* Equipment brands */}
-      <section className="overflow-hidden bg-black pb-10">
-        <p className="px-5 text-center text-xl font-bold text-brand md:text-2xl">
-          State-of-the-art gym equipment from world-leading brands.
-        </p>
-        <div className="mt-12 flex w-max animate-marquee" style={{ animationDuration: "25s" }}>
-          {[0, 1].map((k) => (
-            <ul key={k} className="flex shrink-0 items-center" aria-hidden={k === 1}>
-              {[...equipmentBrands, ...equipmentBrands].map((b, i) => (
-                <li key={i} className="mx-10 whitespace-nowrap text-3xl font-bold tracking-wide text-white/85 md:mx-16">
-                  {b}
-                </li>
-              ))}
-            </ul>
-          ))}
-        </div>
-      </section>
+      <Marquee />
 
-      <PhotoBg src="/images/slide-athlete.jpg" overlay="bg-black/90" className="py-20 md:py-24">
-        <section className="wrap">
-          <Reveal className="text-center">
-            <h2 className="h-section mx-auto max-w-4xl">{service.areasTitle}</h2>
-            <p className="lead mx-auto mt-8 max-w-2xl">{service.areasText}</p>
-          </Reveal>
-          <div className="mt-20 grid gap-16 md:grid-cols-2 md:gap-x-24 lg:gap-x-40">
-            <div className="space-y-16 md:mt-28 md:space-y-28">
-              {left.map((a) => (
-                <ShowcaseItem key={a.title} {...a} />
-              ))}
-            </div>
-            <div className="space-y-16 md:space-y-28">
-              {right.map((a) => (
-                <ShowcaseItem key={a.title} {...a} />
-              ))}
-            </div>
-          </div>
+      {service.slug === "gym" && (
+        <section className="border-b border-white/10 py-14">
+          <p className="wrap text-center text-sm font-bold uppercase tracking-[0.2em] text-white/50">
+            Equipment from world-leading brands
+          </p>
+          <ul className="wrap mt-8 flex flex-wrap items-center justify-center gap-x-14 gap-y-6">
+            {equipmentBrands.map((b) => (
+              <li key={b} className="font-display text-2xl font-extrabold uppercase tracking-wide text-white/60">
+                {b}
+              </li>
+            ))}
+          </ul>
         </section>
-      </PhotoBg>
+      )}
 
-      <Transformations />
-
-      <section className="bg-black pb-24">
+      <section className="section">
         <div className="wrap">
-          <Reveal className="text-center">
-            <h2 className="h-section">Premium amenities</h2>
-            <p className="lead mx-auto mt-8 max-w-2xl">
-              Beyond the workout floor, OZMO offers a full range of amenities, including: steam
-              rooms, showers, and personal lockers.
-            </p>
-          </Reveal>
-          <ul className="mt-16 grid grid-cols-2 gap-x-6 gap-y-12 lg:grid-cols-4 lg:gap-x-10">
-            {amenities.map((a, i) => (
+          <SectionHeading eyebrow="Inside the club" title={service.areasTitle} lead={service.areasText} />
+          <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {service.areas.map((a, i) => (
               <li key={a.title}>
-                <Reveal delay={i * 100}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={a.image}
-                    alt=""
-                    className={`w-full object-cover ${i % 2 === 0 ? "aspect-[4/3]" : "aspect-[3/4]"}`}
-                  />
-                  <h3 className="h-sub mt-8">{a.title}</h3>
-                  <p className="mt-4 text-lg leading-9 text-white/90">{a.text}</p>
+                <Reveal delay={(i % 3) * 90} className="h-full">
+                  <ImageCard image={a.image} title={a.title} text={a.text} index={i} />
                 </Reveal>
               </li>
             ))}
@@ -119,18 +93,42 @@ export default function ServicePage({ service }: { service: ServiceContent }) {
         </div>
       </section>
 
+      <section className="section bg-ink-2">
+        <div className="wrap">
+          <SectionHeading
+            eyebrow="After your workout"
+            title="Premium amenities"
+            lead="Every OZMO membership comes with access to amenities that make recovery part of the routine."
+          />
+          <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {amenities.map((a, i) => (
+              <li key={a.title}>
+                <Reveal delay={i * 90}>
+                  <Photo src={a.image} sizes="(min-width: 1024px) 25vw, 50vw" className="aspect-[4/5] rounded-2xl" />
+                  <h3 className="h3 mt-5">{a.title}</h3>
+                  <p className="mt-2 leading-7 text-white/65">{a.text}</p>
+                </Reveal>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <CtaBand
+        eyebrow={`${openLocations.length} gyms near you`}
+        title="Find your nearest OZMO"
+        text={`${service.title} is available across our gyms in Ludhiana and Jagraon, open 5 a.m. to 11 p.m. every day.`}
+        primary={{ label: "See all locations", href: "/locations" }}
+      />
+
       <Faq items={homeFaqs} />
 
       <FormSection
         id="trial"
-        title={
-          <>
-            Free 1-day trial
-            <br />
-            signup
-          </>
-        }
-        text="Sign up for free 1-day trial with us and experience all of our services for free at OZMO."
+        eyebrow="Free 1-day trial"
+        title="Try OZMO free for a day"
+        text={`Experience ${service.title.toLowerCase()} and every other OZMO facility — on us. Pick your nearest gym and we'll call to confirm.`}
+        points={["Full access for a day", "Trainer walkthrough", "No payment needed"]}
       >
         <TrialForm />
       </FormSection>

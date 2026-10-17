@@ -1,104 +1,111 @@
 import type { Metadata } from "next";
-import { HeartPulse, UserCheck } from "lucide-react";
-import PunjabMap from "@/components/PunjabMap";
+import { HeartPulse, UserCheck, Users } from "lucide-react";
+import JsonLd, { breadcrumbSchema } from "@/components/JsonLd";
+import { NetworkMap } from "@/components/Locations";
+import Photo from "@/components/Photo";
 import Reveal from "@/components/Reveal";
-import { PageHero, PhotoBg, Testimonials } from "@/components/Sections";
-import { SocialIcon } from "@/components/Socials";
+import { CtaBand, PageHero, SectionHeading, Testimonials } from "@/components/Sections";
 import Stats from "@/components/Stats";
-import Tapes from "@/components/Tapes";
 import Team from "@/components/Team";
+import { openLocations, site, soonLocations, stats } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "About us",
-  description:
-    "OZMO is a leading fitness system in Punjab with 12+ years of experience, 6 branches and over 10,000 lifetime customers.",
+  title: "About OZMO — Ludhiana's Premium Gym & Spa Chain",
+  description: `OZMO Gym & Spa has ${site.foundedYears}+ years in health and wellness, ${openLocations.length} gyms across Ludhiana and Jagraon and over 10,000 members trained. Meet the team and our mission.`,
+  alternates: { canonical: "/about" },
+  openGraph: { url: "/about" },
 };
 
 const pillars = [
-  { icon: <HeartPulse size={30} />, text: "Empowering a life of physical and mental well-being" },
-  { icon: <UserCheck size={30} />, text: "Personalized training programs with expert guidance" },
-  { icon: <SocialIcon name="instagram" size={30} />, text: "Thriving online communities foster individual empowerment" },
+  { icon: HeartPulse, title: "Body & mind", text: "Empowering a life of physical and mental well-being." },
+  { icon: UserCheck, title: "Expert guidance", text: "Personalized training programs with certified trainers." },
+  { icon: Users, title: "Community", text: "A supportive community that keeps you showing up." },
 ];
 
 export default function AboutPage() {
   return (
     <>
-      <PageHero title="About us" image="/images/about-gym.jpg" />
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "About", path: "/about" },
+        ])}
+      />
+      <PageHero
+        eyebrow="About OZMO"
+        title={
+          <>
+            Built in Ludhiana. <span className="text-brand">Built for results.</span>
+          </>
+        }
+        lead={`For ${site.foundedYears}+ years OZMO has helped people across Punjab transform body and mind — with premium gyms, expert trainers and a community that keeps you going.`}
+        image="/images/about-gym.jpg"
+        crumbs={[{ name: "About", href: "/about" }]}
+      />
 
-      <section className="bg-navy py-20 md:py-24">
+      <section className="pb-20">
         <div className="wrap">
-          <Reveal className="text-center">
-            <h2 className="h-section">
-              Let us transform your
-              <br />
-              fitness journey
-            </h2>
-            <p className="lead mx-auto mt-10 max-w-2xl">
-              We are a leading fitness system in Punjab, with 12+ years of experience in the fitness
-              industry and trusted by over 10,000 lifetime customers.
-            </p>
-          </Reveal>
-          <Reveal className="mt-14">
-            <Stats />
-          </Reveal>
-          <Reveal className="mt-16">
-            {/* TODO: swap this still for the real gym tour video when it is available */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/about-gym.jpg" alt="Inside an OZMO gym" className="aspect-[2/1] w-full object-cover" />
-          </Reveal>
-        </div>
-      </section>
-
-      <Tapes className="bg-black" />
-
-      <section className="bg-black pb-24 pt-10">
-        <div className="wrap">
-          <Reveal className="text-center">
-            <h2 className="h-section">All branches</h2>
-            <p className="lead mx-auto mt-8 max-w-xl">
-              We are the leading fitness system in Punjab with 6 fitness centers to help you easily
-              choose the right one for you.
-            </p>
-          </Reveal>
-          <Reveal className="mt-10">
-            <PunjabMap />
-          </Reveal>
-        </div>
-      </section>
-
-      <PhotoBg src="/images/franchise-training.jpg" overlay="bg-black/85" className="py-20 md:py-28">
-        <section className="wrap">
-          <div className="grid items-center gap-12 lg:grid-cols-[0.85fr_1fr]">
-            <Reveal>
-              <h2 className="h-section">Our mission</h2>
-              <p className="lead mt-10">
-                We believe that fitness is the foundation for a healthy and happy life.
-              </p>
-              <p className="lead mt-10">
-                Our mission is to help people of all fitness levels achieve their goals through
-                personalized training programs, expert guidance, and a supportive community.
-              </p>
-            </Reveal>
-            <Reveal delay={150}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/slide-athlete.jpg" alt="Athlete training" className="aspect-[720/400] w-full object-cover" />
-            </Reveal>
+          <div className="card px-2 py-8 md:py-10">
+            <Stats items={stats} />
           </div>
-          <ul className="mt-16 grid gap-8 md:grid-cols-3">
-            {pillars.map((p, i) => (
-              <li key={p.text}>
-                <Reveal delay={i * 120} className="flex items-center gap-5">
-                  <span className="icon-tile">{p.icon}</span>
-                  <span className="text-lg leading-9 text-white/90 md:text-xl">{p.text}</span>
-                </Reveal>
-              </li>
-            ))}
-          </ul>
-        </section>
-      </PhotoBg>
+        </div>
+      </section>
+
+      <section className="section pt-0">
+        <div className="wrap grid items-center gap-14 lg:grid-cols-2">
+          <div>
+            <SectionHeading
+              eyebrow="Our mission"
+              title="Fitness is the foundation for a healthy, happy life"
+              lead="Our mission is to help people of all fitness levels achieve their goals through personalized training programs, expert guidance, and a supportive community."
+            />
+            <ul className="mt-10 grid gap-4 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+              {pillars.map((p, i) => (
+                <li key={p.title}>
+                  <Reveal delay={i * 90} className="card h-full p-6">
+                    <span className="icon-badge">
+                      <p.icon size={22} />
+                    </span>
+                    <h3 className="mt-5 font-display text-lg font-extrabold uppercase">{p.title}</h3>
+                    <p className="mt-2 text-sm leading-6 text-white/65">{p.text}</p>
+                  </Reveal>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <Photo src="/images/slide-athlete.jpg" alt="Member training at OZMO" className="aspect-[4/5] rounded-3xl lg:aspect-[4/4.6]" />
+        </div>
+      </section>
+
+      <section className="section bg-ink-2">
+        <div className="wrap grid items-center gap-14 lg:grid-cols-[1fr_1.1fr]">
+          <SectionHeading
+            eyebrow="Our network"
+            title={
+              <>
+                {openLocations.length} gyms. <span className="text-brand">{soonLocations.length} on the way.</span>
+              </>
+            }
+            lead={`From our first gym in Ludhiana to Jagraon — and next ${soonLocations
+              .map((l) => l.area)
+              .join(", ")}. Wherever you are, there's an OZMO close by.`}
+          />
+          <Reveal>
+            <NetworkMap />
+          </Reveal>
+        </div>
+      </section>
 
       <Team />
       <Testimonials />
+
+      <CtaBand
+        eyebrow="Start today"
+        title="Your first workout is free"
+        text="Book a free 1-day trial at any OZMO gym and see the difference for yourself."
+        primary={{ label: "Book a free trial", href: "/#trial" }}
+        secondary={{ label: "Find a gym", href: "/locations" }}
+      />
     </>
   );
 }

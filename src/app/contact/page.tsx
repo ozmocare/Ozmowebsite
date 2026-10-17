@@ -1,73 +1,92 @@
 import type { Metadata } from "next";
-import { Mail, MapPin, PhoneCall } from "lucide-react";
-import Branches from "@/components/Branches";
+import { Clock, Mail, MapPin, PhoneCall } from "lucide-react";
+import JsonLd, { breadcrumbSchema } from "@/components/JsonLd";
 import { ContactForm } from "@/components/LeadForms";
+import LocationFinder from "@/components/LocationFinder";
 import Reveal from "@/components/Reveal";
-import { PageHero } from "@/components/Sections";
-import { mapSrc, site } from "@/lib/site";
+import { PageHero, SectionHeading } from "@/components/Sections";
+import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Contact us",
-  description: "Get in touch with OZMO Gym — call, email or send us a message. 6 branches across Ludhiana.",
+  title: "Contact OZMO Gym Ludhiana",
+  description: `Call ${site.phone}, email ${site.email} or send us a message. Find phone numbers and directions for every OZMO gym in Ludhiana and Jagraon.`,
+  alternates: { canonical: "/contact" },
+  openGraph: { url: "/contact" },
 };
 
 const cards = [
-  { icon: PhoneCall, label: "Phone number", value: site.phone, href: site.phoneHref },
-  { icon: Mail, label: "Email address", value: site.email, href: `mailto:${site.email}` },
-  { icon: MapPin, label: "Address", value: site.address },
+  { icon: PhoneCall, label: "Call us", value: site.phone, href: site.phoneHref },
+  { icon: Mail, label: "Email us", value: site.email, href: `mailto:${site.email}` },
+  { icon: MapPin, label: "Head office", value: site.address },
+  { icon: Clock, label: "Opening hours", value: "5 a.m. – 11 p.m., Monday to Sunday" },
 ];
 
 export default function ContactPage() {
   return (
     <>
-      <PageHero title="Contact us" image="/images/premium-gym.jpg" />
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "Contact", path: "/contact" },
+        ])}
+      />
+      <PageHero
+        eyebrow="Contact"
+        title={
+          <>
+            Happy to <span className="text-brand">help</span>
+          </>
+        }
+        lead="Questions about memberships, trials or the franchise? Send us a message or call your nearest OZMO."
+        image="/images/premium-gym.jpg"
+        crumbs={[{ name: "Contact", href: "/contact" }]}
+      />
 
-      <section className="bg-black py-20 md:py-24">
-        <div className="wrap">
-          <Reveal>
-            <h2 className="h-section text-center">
-              Happy to help! Let us know
-              <br />
-              your questions or feedback
-            </h2>
+      <section className="pb-24">
+        <div className="wrap grid gap-8 lg:grid-cols-[1.3fr_1fr]">
+          <Reveal className="card p-6 md:p-10">
+            <h2 className="h3">Send us a message</h2>
+            <p className="mt-2 text-white/60">We usually reply within one working day.</p>
+            <div className="mt-8">
+              <ContactForm />
+            </div>
           </Reveal>
-
-          <Reveal className="mt-16 grid gap-12 lg:grid-cols-[1.55fr_1fr]">
-            <ContactForm />
-            <ul className="space-y-7">
-              {cards.map((c) => (
-                <li key={c.label} className="flex items-center gap-7 rounded-xl bg-[#121212] p-8">
-                  <c.icon size={44} strokeWidth={1.6} className="shrink-0" />
+          <ul className="grid gap-4">
+            {cards.map((c, i) => (
+              <li key={c.label}>
+                <Reveal delay={i * 80} className="card flex h-full items-center gap-5 p-6">
+                  <span className="icon-badge">
+                    <c.icon size={22} />
+                  </span>
                   <div>
-                    <p className="text-lg text-white/70">{c.label}</p>
+                    <p className="text-sm font-semibold uppercase tracking-wider text-white/50">{c.label}</p>
                     {c.href ? (
-                      <a href={c.href} className="mt-1 block text-xl font-bold hover:text-brand md:text-2xl">
+                      <a href={c.href} className="mt-1 block text-lg font-bold hover:text-brand">
                         {c.value}
                       </a>
                     ) : (
-                      <p className="mt-1 text-xl font-bold leading-9 md:text-2xl">{c.value}</p>
+                      <p className="mt-1 text-lg font-bold leading-7">{c.value}</p>
                     )}
                   </div>
-                </li>
-              ))}
-            </ul>
+                </Reveal>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="section bg-ink-2">
+        <div className="wrap">
+          <SectionHeading
+            eyebrow="Visit us"
+            title="Find your nearest OZMO"
+            lead="Select a gym to see it on the map, call the front desk or get directions."
+          />
+          <Reveal className="mt-12">
+            <LocationFinder />
           </Reveal>
         </div>
       </section>
-
-      <section className="bg-[#0b100c] pb-20">
-        <div className="wrap">
-          <iframe
-            title="OZMO Gym Luxe on Google Maps"
-            src={mapSrc(`Ozmo gym Luxe, ${site.address}`)}
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            className="h-[420px] w-full rounded-2xl border-0 md:h-[600px]"
-          />
-        </div>
-      </section>
-
-      <Branches className="bg-black" />
     </>
   );
 }

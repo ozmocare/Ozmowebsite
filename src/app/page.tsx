@@ -1,159 +1,202 @@
 import Link from "next/link";
-import { ArrowRight, Bike, Lock, ShowerHead } from "lucide-react";
-import Branches from "@/components/Branches";
-import Carousel from "@/components/Carousel";
+import { ArrowRight, ArrowUpRight, Bike, Lock, MapPin, ShowerHead, Sparkles } from "lucide-react";
 import Faq from "@/components/Faq";
 import { TrialForm } from "@/components/LeadForms";
+import { NetworkMap } from "@/components/Locations";
+import Marquee from "@/components/Marquee";
+import Photo from "@/components/Photo";
 import Reveal from "@/components/Reveal";
-import { FeatureRow, FollowRail, FormSection, PhotoBg, Testimonials } from "@/components/Sections";
+import { CtaBand, FeatureRow, FormSection, SectionHeading, Testimonials } from "@/components/Sections";
 import Stats from "@/components/Stats";
-import Tapes from "@/components/Tapes";
 import Transformations from "@/components/Transformations";
-import { homeFaqs } from "@/lib/site";
+import { homeFaqs, locationHref, openLocations, site, soonLocations, stats } from "@/lib/site";
 
-// Card photos already carry their label (cut from the original design).
 const services = [
-  { label: "Gym", image: "/images/svc-gym.jpg", href: "/services/gym" },
-  { label: "Cardio", image: "/images/svc-cardio.jpg", href: "/services/gym" },
-  { label: "Crossfit", image: "/images/svc-crossfit.jpg", href: "/services/kickfit" },
-  { label: "Yoga", image: "/images/svc-yoga.jpg", href: "/services/yoga" },
-  { label: "Swimming", image: "/images/svc-swimming.jpg", href: "/services/swimming" },
+  { label: "Gym", text: "Strength & free-weight zones", image: "/images/svc-gym.jpg", href: "/services/gym" },
+  { label: "Cardio", text: "Treadmills, bikes & HIIT", image: "/images/svc-cardio.jpg", href: "/services/gym" },
+  { label: "Kickfit", text: "Kickboxing & cross-fit", image: "/images/svc-crossfit.jpg", href: "/services/kickfit" },
+  { label: "Yoga", text: "Flexibility & mindfulness", image: "/images/svc-yoga.jpg", href: "/services/yoga" },
+  { label: "Swimming", text: "Coaching & lap swims", image: "/images/svc-swimming.jpg", href: "/services/swimming" },
 ];
 
 export default function Home() {
   return (
     <>
       {/* Hero */}
-      <PhotoBg src="/images/slide-athlete.jpg" overlay="bg-black/65" className="pt-[72px] lg:pt-[110px]">
-        <section className="relative flex min-h-[calc(100svh-72px)] flex-col items-center justify-center px-5 pb-16 pt-6 text-center lg:min-h-[calc(100svh-110px)]">
-          <FollowRail />
-          <p className="rounded-full border-[3px] border-[#222] bg-[#f1f1f1] px-6 py-2.5 text-lg font-semibold text-black shadow-lg">
-            Trusted by 10k+ clients
-          </p>
-          <h1 className="mt-6 whitespace-nowrap font-display text-[clamp(1.9rem,9vw,8.75rem)] uppercase leading-[1.05]">
-            <span className="block text-brand">Transform</span>
-            <span className="block text-white">Body and mind</span>
-            <span className="block text-brand">At Ozmo</span>
-          </h1>
-          <p className="lead mt-8 max-w-2xl">
-            With 12+ years of experience in the health and wellness industry, our fitness solution
-            continues to be a top option throughout India
-          </p>
-          <Link href="#services" className="btn mt-8 px-9 py-4 text-lg">
-            See more <ArrowRight size={20} />
-          </Link>
-        </section>
-      </PhotoBg>
+      <section className="relative isolate flex min-h-[100svh] flex-col justify-end overflow-hidden pb-10 pt-40">
+        <Photo src="/images/slide-athlete.jpg" alt="" eager sizes="100vw" className="!absolute inset-0 -z-20" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-ink via-ink/80 to-ink/20" />
+        <div className="absolute inset-x-0 bottom-0 -z-10 h-1/2 bg-gradient-to-t from-ink to-transparent" />
 
-      <Tapes />
+        <div className="wrap">
+          <p className="eyebrow">Ludhiana&apos;s premium gym &amp; spa chain</p>
+          <h1 className="h-display mt-5 text-[clamp(3rem,10vw,8.5rem)]">
+            Transform
+            <br />
+            body &amp; mind
+            <br />
+            <span className="text-brand">at OZMO</span>
+          </h1>
+          <p className="lead mt-7 max-w-xl">
+            {site.foundedYears}+ years of helping Punjab get fitter. Modern equipment, expert trainers, steam &amp; spa —
+            across {openLocations.length} gyms in Ludhiana and Jagraon.
+          </p>
+          <div className="mt-9 flex flex-wrap gap-3">
+            <Link href="#trial" className="btn-primary">
+              Book a free trial <ArrowRight size={18} />
+            </Link>
+            <Link href="/locations" className="btn-ghost">
+              <MapPin size={17} /> Find a gym near you
+            </Link>
+          </div>
+
+          <div className="mt-16 border-t border-white/15 pt-8">
+            <Stats items={stats} />
+          </div>
+        </div>
+      </section>
+
+      <Marquee />
 
       {/* Services */}
-      <section id="services" className="bg-navy pb-24 pt-10">
-        <Reveal className="wrap text-center">
-          <h2 className="h-section">Our services</h2>
-          <p className="lead mx-auto mt-8 max-w-2xl">
-            OZMO offers variety of popular services to help you make comfortable choices that suit
-            your needs.
-          </p>
-        </Reveal>
-        <Reveal className="mt-14">
-          <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
-            {services.map((s) => (
-              <li key={s.label} className="last:col-span-2 sm:last:col-span-1">
-                <Link href={s.href} className="group block overflow-hidden" aria-label={s.label}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={s.image}
-                    alt={s.label}
-                    className="aspect-[296/564] w-full object-cover transition duration-500 group-hover:scale-105 group-hover:brightness-110"
-                  />
-                </Link>
+      <section className="section">
+        <div className="wrap">
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <SectionHeading
+              eyebrow="What we offer"
+              title="Train your way"
+              lead="From heavy lifting to yoga and swimming — everything you need under one roof."
+            />
+            <Link href="/services/gym" className="btn-ghost">
+              Explore services <ArrowUpRight size={17} />
+            </Link>
+          </div>
+          <ul className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
+            {services.map((s, i) => (
+              <li key={s.label} className={i === 4 ? "col-span-2 md:col-span-1" : ""}>
+                <Reveal delay={i * 80} className="h-full">
+                  <Link href={s.href} className="group relative block h-full overflow-hidden rounded-2xl">
+                    <Photo
+                      src={s.image}
+                      alt={`${s.label} at OZMO Gym Ludhiana`}
+                      sizes="(min-width: 1024px) 20vw, 50vw"
+                      className="aspect-[3/4] h-full"
+                      imgClassName="transition duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/30 to-transparent" />
+                    <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 p-5">
+                      <div>
+                        <h3 className="font-display text-2xl font-black uppercase">{s.label}</h3>
+                        <p className="text-sm text-white/70">{s.text}</p>
+                      </div>
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand text-ink transition group-hover:rotate-45">
+                        <ArrowUpRight size={18} />
+                      </span>
+                    </div>
+                  </Link>
+                </Reveal>
               </li>
             ))}
           </ul>
-        </Reveal>
+        </div>
       </section>
 
-      {/* Numbers + gallery */}
-      <section className="bg-navy pb-24">
-        <div className="wrap">
-          <Reveal className="text-center">
-            <h2 className="h-section">
-              Let us transform your
-              <br />
-              fitness journey
-            </h2>
-            <p className="lead mx-auto mt-10 max-w-2xl">
-              We are a leading fitness system in Punjab, with 12+ years of experience in the fitness
-              industry and trusted by over 10,000 lifetime customers.
-            </p>
-          </Reveal>
-          <Reveal className="mt-14">
-            <Stats />
-          </Reveal>
-          <Reveal className="mt-16">
-            <Carousel
-              images={[
-                { src: "/images/slide-athlete.jpg", alt: "Athlete training with a resistance band" },
-                { src: "/images/premium-gym.jpg", alt: "OZMO gym floor" },
-                { src: "/images/about-gym.jpg", alt: "Strength training area" },
-              ]}
+      {/* Facilities */}
+      <section className="section bg-ink-2">
+        <div className="wrap grid items-center gap-14 lg:grid-cols-2">
+          <div>
+            <SectionHeading
+              eyebrow="Why OZMO"
+              title={
+                <>
+                  5-star premium
+                  <br />
+                  fitness centres
+                </>
+              }
+              lead="Every OZMO is built to feel like a premium club — so you actually look forward to training."
             />
+            <ul className="mt-10 space-y-7">
+              <FeatureRow icon={<Bike size={22} />} title="Full equipment">
+                Modern facilities with full equipment in a spacious, comfortable space.
+              </FeatureRow>
+              <FeatureRow icon={<ShowerHead size={22} />} title="Showers, sauna & steam">
+                Recover in style with showers, sauna and steam rooms after every session.
+              </FeatureRow>
+              <FeatureRow icon={<Lock size={22} />} title="Smart lockers">
+                Smart lockers keep your personal belongings safe and secure.
+              </FeatureRow>
+              <FeatureRow icon={<Sparkles size={22} />} title="Expert trainers">
+                50+ certified trainers to guide your form, plan and progress.
+              </FeatureRow>
+            </ul>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <Photo src="/images/premium-gym.jpg" alt="OZMO gym floor" className="col-span-2 aspect-[16/9] rounded-2xl" />
+            <Photo src="/images/premium-washroom.jpg" alt="Premium changing rooms" sizes="(min-width: 1024px) 25vw, 50vw" className="aspect-square rounded-2xl" />
+            <Photo src="/images/premium-sauna.jpg" alt="Sauna at OZMO" sizes="(min-width: 1024px) 25vw, 50vw" className="aspect-square rounded-2xl" />
+          </div>
+        </div>
+      </section>
+
+      {/* Locations teaser */}
+      <section className="section">
+        <div className="wrap grid items-center gap-14 lg:grid-cols-[1fr_1.1fr]">
+          <div>
+            <SectionHeading
+              eyebrow="Our locations"
+              title={
+                <>
+                  {openLocations.length} gyms open.
+                  <br />
+                  <span className="text-brand">{soonLocations.length} more coming.</span>
+                </>
+              }
+              lead="There's an OZMO close to home or work. Every gym is open 5 a.m. to 11 p.m., seven days a week."
+            />
+            <ul className="mt-8 flex flex-wrap gap-2">
+              {openLocations.map((l) => (
+                <li key={l.slug}>
+                  <Link href={locationHref(l)} className="chip border-white/15 text-white/85 hover:border-brand hover:text-brand">
+                    <span className="h-1.5 w-1.5 rounded-full bg-brand" /> {l.area}
+                  </Link>
+                </li>
+              ))}
+              {soonLocations.map((l) => (
+                <li key={l.slug} className="chip border-dashed border-white/20 text-white/50">
+                  {l.area} · soon
+                </li>
+              ))}
+            </ul>
+            <Link href="/locations" className="btn-primary mt-10">
+              View all locations <ArrowRight size={18} />
+            </Link>
+          </div>
+          <Reveal>
+            <NetworkMap />
           </Reveal>
         </div>
       </section>
 
-      {/* 5-star facilities */}
-      <PhotoBg src="/images/slide-athlete.jpg" overlay="bg-black/90" className="py-20 md:py-28">
-        <section className="wrap grid items-center gap-12 lg:grid-cols-[0.8fr_1fr]">
-          <Reveal>
-            <h2 className="h-section">
-              5-star premium
-              <br />
-              fitness center
-            </h2>
-            <ul className="mt-12 space-y-10">
-              <FeatureRow icon={<Bike size={30} />}>
-                Modern facilities with full equipment. Spacious and comfortable space.
-              </FeatureRow>
-              <FeatureRow icon={<ShowerHead size={30} />}>
-                Including showers, sauna &amp; smart locker to enhance your post-exercise tranquility.
-              </FeatureRow>
-              <FeatureRow icon={<Lock size={30} />}>
-                Smart lockers keep your personal belongings safe and secure.
-              </FeatureRow>
-            </ul>
-          </Reveal>
-          <Reveal delay={150}>
-            <Carousel
-              controls={false}
-              interval={3500}
-              className="aspect-[800/447]"
-              images={[
-                { src: "/images/premium-gym.jpg", alt: "Gym floor with machines" },
-                { src: "/images/premium-washroom.jpg", alt: "Premium washroom" },
-                { src: "/images/premium-sauna.jpg", alt: "Sauna" },
-              ]}
-            />
-          </Reveal>
-        </section>
-      </PhotoBg>
-
       <Transformations />
-      <Branches />
+
+      <CtaBand
+        eyebrow="OZMO franchise"
+        title="Grow with OZMO"
+        text={`Bring a proven premium gym brand to your city. ${openLocations.length} gyms running, ${soonLocations.length} opening soon — and room for partners who want to build with us.`}
+        primary={{ label: "Explore the franchise", href: "/franchise" }}
+        secondary={{ label: "Apply now", href: "/franchise#apply" }}
+      />
+
       <Testimonials />
       <Faq items={homeFaqs} />
 
       <FormSection
         id="trial"
-        title={
-          <>
-            Free 1-day trial
-            <br />
-            signup
-          </>
-        }
-        text="Sign up for free 1-day trial with us and experience all of our services for free at OZMO."
+        eyebrow="Free 1-day trial"
+        title="Your first workout is on us"
+        text="Sign up for a free 1-day trial and experience every OZMO facility. Pick your nearest gym and we'll call to confirm a time."
+        points={["Full access to the gym for a day", "Free trainer walkthrough", "No payment, no obligation"]}
       >
         <TrialForm />
       </FormSection>

@@ -53,11 +53,11 @@ export function SocialLinks({
           aria-label={n === "x" ? "X (Twitter)" : n}
           className={
             variant === "tile"
-              ? "flex h-10 w-10 items-center justify-center bg-white text-black transition hover:bg-brand"
-              : "text-white transition hover:text-brand"
+              ? "flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-brand hover:text-ink"
+              : "flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-brand hover:text-ink"
           }
         >
-          <SocialIcon name={n} size={variant === "tile" ? 20 : 24} />
+          <SocialIcon name={n} size={18} />
         </a>
       ))}
     </div>

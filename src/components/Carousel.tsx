@@ -1,18 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function Carousel({
   images,
-  className = "aspect-[16/9] md:aspect-[1350/720]",
+  className = "aspect-[16/9]",
   controls = true,
   interval = 5000,
+  sizes = "(min-width: 1320px) 1240px, 100vw",
 }: {
   images: { src: string; alt: string }[];
   className?: string;
   controls?: boolean;
   interval?: number;
+  sizes?: string;
 }) {
   const [index, setIndex] = useState(0);
   const count = images.length;
@@ -26,48 +29,49 @@ export default function Carousel({
   const go = (d: number) => setIndex((i) => (i + d + count) % count);
 
   return (
-    <div className={`relative overflow-hidden bg-black ${className}`}>
+    <div className={`relative overflow-hidden rounded-3xl bg-surface ${className}`}>
       {images.map((img, i) => (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
+        <Image
           key={img.src}
           src={img.src}
           alt={img.alt}
-          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
-            i === index ? "opacity-100" : "opacity-0"
-          }`}
+          fill
+          sizes={sizes}
+          className={`object-cover transition-opacity duration-700 ${i === index ? "opacity-100" : "opacity-0"}`}
         />
       ))}
       {controls && count > 1 && (
-        <>
+        <div className="absolute bottom-4 right-4 flex items-center gap-2 md:bottom-6 md:right-6">
           <button
             type="button"
             onClick={() => go(-1)}
             aria-label="Previous slide"
-            className="absolute left-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full text-white transition hover:bg-black/40 md:left-6"
+            className="flex h-11 w-11 items-center justify-center rounded-full bg-ink/70 text-white backdrop-blur transition hover:bg-brand hover:text-ink"
           >
-            <ChevronLeft size={28} />
+            <ChevronLeft size={22} />
           </button>
           <button
             type="button"
             onClick={() => go(1)}
             aria-label="Next slide"
-            className="absolute right-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full text-white transition hover:bg-black/40 md:right-6"
+            className="flex h-11 w-11 items-center justify-center rounded-full bg-ink/70 text-white backdrop-blur transition hover:bg-brand hover:text-ink"
           >
-            <ChevronRight size={28} />
+            <ChevronRight size={22} />
           </button>
-          <div className="absolute inset-x-0 bottom-4 flex justify-center gap-2.5">
-            {images.map((img, i) => (
-              <button
-                key={img.src}
-                type="button"
-                onClick={() => setIndex(i)}
-                aria-label={`Go to slide ${i + 1}`}
-                className={`h-2.5 w-2.5 rounded-full transition ${i === index ? "bg-white" : "bg-white/40"}`}
-              />
-            ))}
-          </div>
-        </>
+        </div>
+      )}
+      {count > 1 && (
+        <div className="absolute bottom-6 left-6 flex gap-2">
+          {images.map((img, i) => (
+            <button
+              key={img.src}
+              type="button"
+              onClick={() => setIndex(i)}
+              aria-label={`Go to slide ${i + 1}`}
+              className={`h-1.5 rounded-full transition-all ${i === index ? "w-8 bg-brand" : "w-3 bg-white/50"}`}
+            />
+          ))}
+        </div>
       )}
     </div>
   );

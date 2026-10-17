@@ -6,20 +6,27 @@ Next.js 16 (App Router) + Tailwind CSS 4. Form submissions are stored in Supabas
 
 | Route | Content |
 | --- | --- |
-| `/` | Home: hero, services, stats, facilities, transformations, branches + map, testimonials, FAQ, free-trial form |
-| `/franchise` | Franchise pitch, benefits, support, branches, FAQ, franchise enquiry form |
-| `/about` | Stats, Punjab branch map, mission, team, testimonials |
+| `/` | Home: hero, services, facilities, locations + network map, transformations, franchise CTA, testimonials, FAQ, free-trial form |
+| `/locations` | All gyms (open + opening soon), interactive map |
+| `/locations/[slug]` | One SEO page per gym that has a full address (title, map, directions, trial form, structured data) |
+| `/franchise` | "Grow with OZMO" sales page: proof, ROI calculator, expansion map, benefits, steps, FAQ, application form |
+| `/about` | Story, stats, network map, mission, team, testimonials |
 | `/services/gym` `/yoga` `/kickfit` `/swimming` | Service pages (shared layout in `src/components/ServicePage.tsx`) |
-| `/contact` | Contact form, contact cards, map, branches |
+| `/contact` | Contact form, contact cards, location finder |
 | `/api/leads` | Receives all three forms and inserts into Supabase |
+
+SEO: per-page titles/descriptions/canonicals, Open Graph image, `/sitemap.xml`, `/robots.txt`, and JSON-LD (Organization, ExerciseGym per location, FAQPage, BreadcrumbList).
+Set `NEXT_PUBLIC_SITE_URL` (e.g. `https://ozmogym.com`) in Vercel once a custom domain is live.
 
 ## Where to edit things
 
-- **Phone, email, address, social links, branches, FAQs, testimonials, stats** → `src/lib/site.ts`
+- **Locations** (add a gym, mark one open, add address/phone/photo) → `locations` in `src/lib/site.ts`. A gym gets its own page as soon as it has a `street` address.
+- **Phone, email, social links, FAQs, testimonials, stats** → `src/lib/site.ts`
+- **Franchise ROI calculator starting values** → `roiDefaults` in `src/lib/site.ts`
 - **Service page copy** → `src/lib/services.ts`
 - **Team members** → `src/components/Team.tsx`
-- **Colours and fonts** → `src/app/globals.css` and `src/app/layout.tsx`
-- **Photos** → `public/images/` (replace a file with the same name and it updates everywhere)
+- **Colours and fonts** → `src/app/globals.css` and `src/app/layout.tsx` (brand yellow `#FCEE00` is taken from the logo)
+- **Photos** → `public/images/` (replace a file with the same name and it updates everywhere). Logo → `public/brand/ozmo-logo.png`
 
 ## Run locally
 

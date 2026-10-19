@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Bike, Lock, MapPin, ShowerHead, Sparkles } from "lucide-react";
 import Faq from "@/components/Faq";
 import { TrialForm } from "@/components/LeadForms";
-import { NetworkMap } from "@/components/Locations";
+import { LudhianaMap } from "@/components/Locations";
 import Marquee from "@/components/Marquee";
 import Photo from "@/components/Photo";
 import Reveal from "@/components/Reveal";
@@ -173,7 +173,7 @@ export default function Home() {
             </Link>
           </div>
           <Reveal>
-            <NetworkMap />
+            <LudhianaMap />
           </Reveal>
         </div>
       </section>

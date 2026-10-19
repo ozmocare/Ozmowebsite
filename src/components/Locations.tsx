@@ -207,3 +207,37 @@ export function NetworkMap({ className = "" }: { className?: string }) {
     </figure>
   );
 }
+
+/* ------------------------------------------------------------------ */
+/* Google map of Ludhiana with every OZMO listing pinned              */
+/* ------------------------------------------------------------------ */
+
+const ludhianaQuery = "Ozmo Gym Ludhiana";
+
+/** Live Google map: a search for OZMO Gym pins every branch listed on Google Maps. */
+export function LudhianaMap({ className = "" }: { className?: string }) {
+  return (
+    <figure className={`overflow-hidden rounded-3xl border border-white/10 bg-surface ${className}`}>
+      <iframe
+        title="Map of OZMO gyms in Ludhiana"
+        src={`https://maps.google.com/maps?q=${encodeURIComponent(ludhianaQuery)}&z=12&output=embed`}
+        loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade"
+        className="h-[420px] w-full border-0 md:h-[520px]"
+      />
+      <figcaption className="flex flex-wrap items-center justify-between gap-3 px-5 py-4 text-sm">
+        <span className="flex items-center gap-2 font-semibold text-white/80">
+          <MapPin size={16} className="text-brand" /> Every OZMO gym in Ludhiana, live on Google Maps
+        </span>
+        <a
+          href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ludhianaQuery)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1 font-bold text-brand hover:underline"
+        >
+          Open in Google Maps <ArrowUpRight size={15} />
+        </a>
+      </figcaption>
+    </figure>
+  );
+}

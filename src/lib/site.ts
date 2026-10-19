@@ -292,8 +292,73 @@ export const budgetRanges = ["Under ₹25 L", "₹25 L - ₹50 L", "₹50 L - �
  * example inputs only — CONFIRM WITH OZMO before launch. Visitors can change all of them.
  */
 export const roiDefaults = {
-  investment: { value: 6000000, min: 2500000, max: 20000000, step: 500000 },
-  members: { value: 400, min: 100, max: 1500, step: 25 },
-  fee: { value: 1800, min: 800, max: 5000, step: 100 },
-  costs: { value: 450000, min: 150000, max: 2000000, step: 25000 },
+  investment: { value: 7500000, min: 3000000, max: 20000000, step: 500000 },
+  members: { value: 450, min: 100, max: 1500, step: 25 },
+  fee: { value: 2000, min: 800, max: 5000, step: 100 },
+  costs: { value: 550000, min: 150000, max: 2000000, step: 25000 },
 };
+
+/* ------------------------------------------------------------------ */
+/* Franchise terms                                                     */
+/* ------------------------------------------------------------------ */
+// DRAFT FIGURES — benchmarked against Punjab/North-India premium gym franchises.
+// Every number below must be confirmed by OZMO before this page goes live.
+
+export const franchiseGlance = [
+  { label: "Business model", value: "FOFO", note: "Franchise owned, franchise operated" },
+  { label: "Total investment", value: "₹50 L – ₹1.5 Cr", note: "Depends on format and city" },
+  { label: "Area required", value: "3,000 – 10,000 sq ft", note: "Carpet area, commercial property" },
+  { label: "Franchise fee", value: "₹5 L – ₹10 L", note: "One-time, by format" },
+  { label: "Royalty", value: "5% of revenue", note: "Monthly, from month 4" },
+  { label: "Expected payback", value: "24 – 36 months", note: "Indicative, not guaranteed" },
+  { label: "Agreement term", value: "9 years", note: "Renewable" },
+  { label: "Time to launch", value: "90 – 120 days", note: "From signing to opening" },
+];
+
+export const franchiseFormats = [
+  {
+    name: "OZMO Gym",
+    tag: "Neighbourhood",
+    area: "3,000 – 5,000 sq ft",
+    investment: "₹50 L – ₹75 L",
+    fee: "₹5 L",
+    image: "/images/equip-chest.jpg",
+    features: ["Strength & cardio floors", "Functional training zone", "Personal training", "Changing rooms & lockers"],
+  },
+  {
+    name: "OZMO Gym & Spa",
+    tag: "Most popular",
+    area: "5,000 – 8,000 sq ft",
+    investment: "₹75 L – ₹1.2 Cr",
+    fee: "₹7.5 L",
+    image: "/images/premium-gym.jpg",
+    features: ["Everything in OZMO Gym", "Group class studio", "Steam & sauna", "Premium washrooms"],
+  },
+  {
+    name: "OZMO Luxe",
+    tag: "Flagship",
+    area: "8,000 – 10,000+ sq ft",
+    investment: "₹1.2 Cr – ₹1.5 Cr+",
+    fee: "₹10 L",
+    image: "/images/premium-sauna.jpg",
+    features: ["Everything in Gym & Spa", "Luxury interiors & lounge", "Spa therapies", "Dedicated recovery zone"],
+  },
+];
+
+/** Share of total investment, shown as a bar. */
+export const investmentBreakdown = [
+  { label: "Gym equipment", share: 40 },
+  { label: "Interiors & fit-out", share: 30 },
+  { label: "Franchise fee", share: 8 },
+  { label: "Launch marketing", share: 7 },
+  { label: "Working capital", share: 15 },
+];
+
+export const propertyChecklist = [
+  "3,000+ sq ft carpet area on ground, first or second floor",
+  "Main-road visibility with signage rights",
+  "Parking for at least 25 cars and two-wheelers",
+  "Clear ceiling height of 11 ft or more",
+  "Dense residential or office catchment within 3 km",
+  "Power load and water supply suitable for a gym & spa",
+];

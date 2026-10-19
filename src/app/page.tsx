@@ -185,7 +185,7 @@ export default function Home() {
         title="Grow with OZMO"
         text={`Bring a proven premium gym brand to your city. ${openLocations.length} gyms running, ${soonLocations.length} opening soon — and room for partners who want to build with us.`}
         primary={{ label: "Explore the franchise", href: "/franchise" }}
-        secondary={{ label: "Apply now", href: "/franchise#apply" }}
+        secondary={{ label: "See investment details", href: "/franchise#details" }}
       />
 
       <Testimonials />

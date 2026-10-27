@@ -23,13 +23,14 @@ import { NetworkMap } from "@/components/Locations";
 import Photo from "@/components/Photo";
 import Reveal from "@/components/Reveal";
 import RoiCalculator from "@/components/RoiCalculator";
-import { FormSection, ImageCard, PageHero, SectionHeading } from "@/components/Sections";
+import { FormSection, PageHero, SectionHeading } from "@/components/Sections";
 import Stats from "@/components/Stats";
 import StickyApply from "@/components/StickyApply";
 import {
   franchiseFaqs,
   franchiseFormats,
   franchiseGlance,
+  franchiseHighlights,
   investmentBreakdown,
   openLocations,
   propertyChecklist,
@@ -51,36 +52,38 @@ const proof = [
   { value: soonLocations.length, suffix: "", label: "Opening soon" },
 ];
 
-const heroFacts = [franchiseGlance[1], franchiseGlance[2], franchiseGlance[5]];
-
-const reasons = [
+const advantages = [
+  { icon: Banknote, title: "Low overhead", text: "Lean staffing and proven cost controls keep running costs in check from day one." },
+  { icon: ShieldCheck, title: "Streamlined operations", text: "SOPs, pricing and member-management software refined across our own gyms." },
+  { icon: BadgeCheck, title: "Value-added services", text: "Personal training, group classes, steam & spa — more revenue from every member." },
+  { icon: Megaphone, title: "Targeted local marketing", text: "Campaigns aimed at your catchment to fill memberships before you open." },
+  { icon: Rocket, title: "State-of-the-art everything", text: "Premium equipment, interiors and amenities that members happily pay for." },
   { icon: Repeat, title: "Recurring revenue", text: "Memberships renew month after month — predictable cash flow, not one-off sales." },
-  { icon: Banknote, title: "Multiple income streams", text: "Memberships, personal training, group classes, spa services and supplements." },
-  { icon: BadgeCheck, title: "A brand people trust", text: `${site.foundedYears}+ years and 10,000+ members — you open with recognition, not from zero.` },
-  { icon: ShieldCheck, title: "Proven playbook", text: "SOPs, pricing and systems refined across our own gyms. You follow what already works." },
-  { icon: Rocket, title: "Faster launch", text: "Site selection, fit-out, hiring and launch marketing handled with you." },
-  { icon: TrendingUp, title: "Growing market", text: "Demand for premium fitness in Punjab's cities and towns keeps rising." },
 ];
 
-const support = [
+const ozmoSupport = [
   {
-    phase: "Before launch",
-    items: ["Site selection & property evaluation", "Layout, interior & equipment planning", "Vendor tie-ups at partner rates", "Staff hiring support", "Pre-sale membership campaign"],
+    title: "Financing & site selection",
+    text: "We guide you on financing options, evaluate locations with you and help negotiate the lease, so your gym opens in the right place on the right terms.",
+    items: ["Financing guidance", "Catchment & site analysis", "Lease negotiation support"],
   },
   {
-    phase: "Launch",
-    items: ["Grand-opening event playbook", "Trainer certification & staff training", "Member onboarding systems", "Local digital marketing launch", "On-site OZMO team for opening week"],
+    title: "Design & construction assistance",
+    text: "A dedicated OZMO franchise manager is your go-to expert, backed by the official OZMO design guide for layout, interiors and equipment.",
+    items: ["Dedicated franchise manager", "OZMO design & layout guide", "Equipment & vendor tie-ups"],
   },
   {
-    phase: "Ongoing",
-    items: ["Monthly business reviews", "Operational & quality audits", "Brand marketing campaigns", "New programs & product roll-outs", "Member management software"],
+    title: "Training & development",
+    text: "Your team is trained to run an OZMO the OZMO way — before, during and after launch.",
+    items: ["Orientation session", "Pre-sale & grand-opening training", "Live operations training", "In-gym IT & systems training"],
   },
 ];
 
-const benefits = [
-  { image: "/images/franchise-group.jpg", title: "Full fitness centre concept", text: "Strength, cardio and functional zones plus group classes like yoga, cross-fit and aerobics." },
-  { image: "/images/franchise-management.jpg", title: "Member management system", text: "Software for member tracking, attendance, billing and performance analytics." },
-  { image: "/images/franchise-marketing.jpg", title: "Marketing-ready brand assets", text: "Brand-approved creatives, launch campaigns and digital marketing templates." },
+const successTools = [
+  { icon: Megaphone, title: "PR & launch marketing", text: "Opening campaigns, local press and events that make your launch the talk of the town." },
+  { icon: TrendingUp, title: "Online presence", text: "Your gym listed on the OZMO website, Google and social channels, with ongoing digital ads." },
+  { icon: Download, title: "Marketing materials", text: "Ready-made posters, brochures, banners, flyers and WhatsApp & email campaigns." },
+  { icon: Users, title: "Member management system", text: "Software for memberships, attendance, billing and performance analytics." },
 ];
 
 const steps = [
@@ -114,18 +117,21 @@ export default function FranchisePage() {
         eyebrow="OZMO franchise"
         title={
           <>
-            Own an <span className="text-brand">OZMO</span> gym
+            Own an <span className="text-brand">OZMO Gym</span> franchise
           </>
         }
-        lead={`Partner with a premium gym brand Punjab already trusts — ${site.foundedYears}+ years in fitness, ${openLocations.length} gyms running and ${soonLocations.length} more opening soon.`}
+        lead={`Your next business opportunity — partner with a premium gym brand Punjab already trusts. ${site.foundedYears}+ years in fitness, ${openLocations.length} gyms running and ${soonLocations.length} more opening soon.`}
         image="/images/franchise-group.jpg"
         crumbs={[{ name: "Franchise", href: "/franchise" }]}
       >
-        <dl className="mt-10 grid max-w-3xl gap-3 sm:grid-cols-3">
-          {heroFacts.map((f) => (
-            <div key={f.label} className="rounded-2xl border border-white/15 bg-ink/60 p-5 backdrop-blur">
-              <dt className="text-xs font-bold uppercase tracking-[0.18em] text-white/55">{f.label}</dt>
-              <dd className="mt-2 font-display text-xl font-black text-brand md:text-2xl">{f.value}</dd>
+        <dl className="mt-10 grid max-w-3xl overflow-hidden rounded-2xl sm:grid-cols-3">
+          {franchiseHighlights.map((h) => (
+            <div
+              key={h.label}
+              className={`flex flex-col-reverse gap-2 p-6 ${h.tone === "brand" ? "bg-brand text-ink" : "bg-surface-2 text-white"}`}
+            >
+              <dt className={`font-bold ${h.tone === "brand" ? "text-ink/75" : "text-white/70"}`}>{h.label}</dt>
+              <dd className="font-display text-4xl font-black leading-none md:text-5xl">{h.value}</dd>
             </div>
           ))}
         </dl>
@@ -140,10 +146,48 @@ export default function FranchisePage() {
       </PageHero>
 
       {/* Proof band */}
-      <section className="bg-brand py-10 text-ink md:py-12">
+      <section className="border-y border-white/10 bg-ink-2 py-10 md:py-12">
         <div className="wrap">
-          <Stats items={proof} tone="brand" />
+          <Stats items={proof} />
         </div>
+      </section>
+
+      {/* Welcome + why a franchise */}
+      <section className="section">
+        <div className="wrap grid gap-12 lg:grid-cols-2 lg:gap-20">
+          <Reveal>
+            <p className="eyebrow">Welcome to OZMO Gym &amp; Spa</p>
+            <h2 className="h2 mt-4">Your next business opportunity</h2>
+            <p className="lead mt-6">
+              Owning an OZMO is more than an investment — it&apos;s a business you&apos;ll be proud of, in a
+              community that grows healthier because of it. For {site.foundedYears}+ years OZMO has built one of
+              Ludhiana&apos;s best-known premium fitness brands, and we&apos;re now bringing it to new cities with
+              partners like you.
+            </p>
+          </Reveal>
+          <Reveal delay={120}>
+            <p className="eyebrow">Why a gym franchise?</p>
+            <h2 className="h2 mt-4">Fitness is a necessity, not a luxury</h2>
+            <p className="lead mt-6">
+              More people join gyms every year, and for most members a membership is part of everyday life — which
+              means steady, recurring revenue. A franchise lets you tap that demand with a brand, systems and support
+              that are already proven, instead of building from scratch.
+            </p>
+          </Reveal>
+        </div>
+        <ul className="wrap mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {advantages.map((r, i) => (
+            <li key={r.title}>
+              <Reveal delay={(i % 3) * 90} className="card h-full p-7 transition hover:border-brand/50">
+                <span className="icon-badge">
+                  <r.icon size={24} />
+                </span>
+                <h3 className="h3 mt-6">{r.title}</h3>
+                <p className="mt-3 leading-7 text-white/65">{r.text}</p>
+              </Reveal>
+            </li>
+          ))}
+        </ul>
       </section>
 
       {/* At a glance */}
@@ -268,43 +312,27 @@ export default function FranchisePage() {
         </div>
       </section>
 
-      {/* Why invest */}
-      <section className="section">
-        <div className="wrap">
-          <SectionHeading eyebrow="Why invest in OZMO" title="A business built to grow" />
-          <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {reasons.map((r, i) => (
-              <li key={r.title}>
-                <Reveal delay={(i % 3) * 90} className="card h-full p-7 transition hover:border-brand/50">
-                  <span className="icon-badge">
-                    <r.icon size={24} />
-                  </span>
-                  <h3 className="h3 mt-6">{r.title}</h3>
-                  <p className="mt-3 leading-7 text-white/65">{r.text}</p>
-                </Reveal>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* Support */}
+      {/* OZMO support */}
       <section className="section bg-ink-2">
         <div className="wrap">
           <SectionHeading
-            eyebrow="Support you get"
-            title="We're with you at every stage"
-            lead="From the first site visit to your hundredth member — and long after."
+            eyebrow="OZMO support"
+            title="We're with you at every step"
+            lead="From finding the right property to training your team, OZMO's franchise team works alongside you."
           />
           <ol className="mt-12 grid gap-6 lg:grid-cols-3">
-            {support.map((s, i) => (
-              <li key={s.phase}>
-                <Reveal delay={i * 100} className="card h-full p-7 md:p-8">
+            {ozmoSupport.map((s, i) => (
+              <li key={s.title}>
+                <Reveal delay={i * 100} className="card relative h-full overflow-hidden p-7 md:p-8">
+                  <span className="absolute -right-1 -top-5 font-display text-[6.5rem] font-black leading-none text-white/[0.05]">
+                    {i + 1}
+                  </span>
                   <span className="font-display text-sm font-black text-brand">0{i + 1}</span>
-                  <h3 className="h3 mt-2">{s.phase}</h3>
-                  <ul className="mt-6 space-y-3.5">
+                  <h3 className="h3 mt-2">{s.title}</h3>
+                  <p className="mt-4 leading-7 text-white/65">{s.text}</p>
+                  <ul className="mt-6 space-y-3">
                     {s.items.map((x) => (
-                      <li key={x} className="flex items-start gap-3 text-white/80">
+                      <li key={x} className="flex items-start gap-3 text-white/85">
                         <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand text-ink">
                           <Check size={12} strokeWidth={3.5} />
                         </span>
@@ -316,15 +344,39 @@ export default function FranchisePage() {
               </li>
             ))}
           </ol>
-          <ul className="mt-6 grid gap-6 md:grid-cols-3">
-            {benefits.map((b, i) => (
-              <li key={b.title}>
-                <Reveal delay={i * 90} className="h-full">
-                  <ImageCard image={b.image} title={b.title} text={b.text} />
-                </Reveal>
-              </li>
-            ))}
-          </ul>
+        </div>
+      </section>
+
+      {/* Success tools */}
+      <section className="section">
+        <div className="wrap grid items-center gap-14 lg:grid-cols-[1fr_1.15fr]">
+          <div>
+            <SectionHeading
+              eyebrow="Success tools"
+              title="Marketing that fills your gym"
+              lead="OZMO provides 100% marketing support — PR, digital and print — so you can focus on running a great gym."
+            />
+            <ul className="mt-10 grid gap-6 sm:grid-cols-2">
+              {successTools.map((t, i) => (
+                <li key={t.title}>
+                  <Reveal delay={(i % 2) * 90} className="flex gap-4">
+                    <span className="icon-badge">
+                      <t.icon size={22} />
+                    </span>
+                    <div>
+                      <h3 className="font-display text-lg font-extrabold uppercase">{t.title}</h3>
+                      <p className="mt-1 leading-7 text-white/65">{t.text}</p>
+                    </div>
+                  </Reveal>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <Reveal className="grid grid-cols-2 gap-4">
+            <Photo src="/images/franchise-marketing.jpg" alt="OZMO marketing materials" className="col-span-2 aspect-[16/9] rounded-2xl" />
+            <Photo src="/images/franchise-management.jpg" alt="Member management system" sizes="(min-width: 1024px) 25vw, 50vw" className="aspect-square rounded-2xl" />
+            <Photo src="/images/franchise-teamwork.jpg" alt="OZMO franchise team" sizes="(min-width: 1024px) 25vw, 50vw" className="aspect-square rounded-2xl" />
+          </Reveal>
         </div>
       </section>
 

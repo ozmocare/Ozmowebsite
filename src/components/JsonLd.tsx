@@ -65,7 +65,6 @@ export function gymSchema(l: Location) {
     parentOrganization: { "@id": `${siteUrl}/#organization` },
     description: `${locationTitle(l)} — ${fullAddress(l)}. Open 5 a.m. to 11 p.m., all week.`,
     hasMap: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(fullAddress(l))}`,
-    potentialAction: { "@type": "ReserveAction", target: `${siteUrl}/locations/${l.slug}#trial`, name: "Book a free trial" },
   };
 }
 

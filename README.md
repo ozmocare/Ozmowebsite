@@ -6,10 +6,10 @@ Next.js 16 (App Router) + Tailwind CSS 4. Form submissions are stored in Supabas
 
 | Route | Content |
 | --- | --- |
-| `/` | Home: hero, services, facilities, locations + network map, transformations, franchise CTA, testimonials, FAQ, free-trial form |
+| `/` | Home: hero, services, facilities, locations + network map, transformations, franchise CTA, testimonials, FAQ, membership enquiry form |
 | `/locations` | All gyms (open + opening soon), interactive map |
-| `/locations/[slug]` | One SEO page per gym that has a full address (title, map, directions, trial form, structured data) |
-| `/franchise` | "Grow with OZMO" sales page: proof, ROI calculator, expansion map, benefits, steps, FAQ, application form |
+| `/locations/[slug]` | One SEO page per gym that has a full address (title, map, directions, membership enquiry form, structured data) |
+| `/franchise` | Franchise sales page: headline figures, why a franchise, at-a-glance terms, formats, investment breakdown + ROI calculator, support, success tools, property needs, steps, FAQ, enquiry form |
 | `/about` | Story, stats, network map, mission, team, testimonials |
 | `/services/gym` `/yoga` `/kickfit` `/swimming` | Service pages (shared layout in `src/components/ServicePage.tsx`) |
 | `/contact` | Contact form, contact cards, location finder |
@@ -42,7 +42,7 @@ npm run dev
 3. Go to **Project Settings → API** and copy the **Project URL** and the **anon public** key.
 4. For local testing, copy `.env.example` to `.env.local` and paste the two values.
 
-Submissions appear in **Table Editor → leads**. The `type` column says which form it came from (`trial`, `franchise`, `contact`).
+Submissions appear in **Table Editor → leads**. The `type` column says which form it came from (`contact` for membership enquiries and the contact form, `franchise` for franchise enquiries).
 
 ## 2. GitHub
 

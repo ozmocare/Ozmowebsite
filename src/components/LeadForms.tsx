@@ -6,7 +6,7 @@ import { budgetRanges, openLocations, serviceLinks } from "@/lib/site";
 
 type Status = { state: "idle" | "sending" | "done" | "error"; message?: string };
 
-function useLeadSubmit(type: "trial" | "franchise" | "contact", successMessage: string) {
+function useLeadSubmit(type: "franchise" | "contact", successMessage: string) {
   const [status, setStatus] = useState<Status>({ state: "idle" });
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
@@ -74,14 +74,16 @@ const chevron = {
     "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.5'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E\")",
 };
 
-export function TrialForm({ defaultBranch }: { defaultBranch?: string }) {
+/** Membership enquiry — saved as a "contact" lead with service + branch. */
+export function JoinForm({ defaultBranch }: { defaultBranch?: string }) {
   const { status, onSubmit } = useLeadSubmit(
-    "trial",
-    "You're in! Our team will call you shortly to confirm your free trial.",
+    "contact",
+    "Thank you! Our team will call you shortly with membership plans and timings.",
   );
   return (
     <form onSubmit={onSubmit} className="space-y-5">
       <Honeypot />
+      <input type="hidden" name="message" value="Membership enquiry" />
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label="Your name">
           <input name="name" required placeholder="Full name" className="field" autoComplete="name" />
@@ -110,8 +112,8 @@ export function TrialForm({ defaultBranch }: { defaultBranch?: string }) {
         </Field>
       </div>
       <StatusLine status={status} />
-      <Submit status={status} label="Book my free trial" busy="Booking…" />
-      <p className="text-center text-xs text-white/40">No payment needed. We&apos;ll call to confirm a time.</p>
+      <Submit status={status} label="Enquire about membership" busy="Sending…" />
+      <p className="text-center text-xs text-white/40">Our team will call you back within one working day.</p>
     </form>
   );
 }

@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { ArrowUpRight, Clock, MapPin, Navigation, Phone } from "lucide-react";
 import Faq from "@/components/Faq";
 import JsonLd, { breadcrumbSchema, gymSchema } from "@/components/JsonLd";
-import { TrialForm } from "@/components/LeadForms";
+import { JoinForm } from "@/components/LeadForms";
 import { LocationCard } from "@/components/Locations";
 import Reveal from "@/components/Reveal";
 import { FormSection, PageHero, SectionHeading } from "@/components/Sections";
@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: PageProps<"/locations/[slug]"
   const l = find(slug);
   if (!l) return {};
   const title = `Gym in ${l.area}, ${l.city} | ${l.brand ?? "OZMO Gym"}`;
-  const description = `${l.brand ?? "OZMO Gym"} ${l.area}: ${fullAddress(l)}. Call ${l.phone}. Open 5 a.m.–11 p.m. daily with modern equipment, expert trainers and steam & spa. Book a free trial.`;
+  const description = `${l.brand ?? "OZMO Gym"} ${l.area}: ${fullAddress(l)}. Call ${l.phone}. Open 5 a.m.–11 p.m. daily with modern equipment, expert trainers and steam & spa. Enquire about membership today.`;
   return {
     title: { absolute: title },
     description,
@@ -82,8 +82,8 @@ export default async function LocationPage({ params }: PageProps<"/locations/[sl
         ]}
       >
         <div className="mt-9 flex flex-wrap gap-3">
-          <a href="#trial" className="btn-primary">
-            Book a free trial here
+          <a href="#join" className="btn-primary">
+            Enquire about membership
           </a>
           <a href={telHref(l.phone!)} className="btn-ghost">
             <Phone size={17} /> {l.phone}
@@ -159,13 +159,13 @@ export default async function LocationPage({ params }: PageProps<"/locations/[sl
       </section>
 
       <FormSection
-        id="trial"
-        eyebrow={`Free trial · ${l.area}`}
-        title={`Try OZMO ${l.area} free for a day`}
-        text={`Book your free 1-day trial at ${l.brand ?? "OZMO Gym"} ${l.area}. We'll call to confirm a time that suits you.`}
-        points={["Full access for a day", "Free trainer walkthrough", "No payment needed"]}
+        id="join"
+        eyebrow={`Membership · ${l.area}`}
+        title={`Join OZMO ${l.area}`}
+        text={`Share your details and the ${l.brand ?? "OZMO Gym"} ${l.area} team will call you with membership plans, pricing and timings.`}
+        points={["Membership plans & pricing", "Tour the gym before you join", "Personal training options"]}
       >
-        <TrialForm defaultBranch={l.area} />
+        <JoinForm defaultBranch={l.area} />
       </FormSection>
 
       <section className="section pt-0">

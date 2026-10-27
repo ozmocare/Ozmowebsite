@@ -228,7 +228,7 @@ export const transformations = [
 export const homeFaqs = [
   {
     q: "How much does an OZMO gym membership cost?",
-    a: "Membership pricing depends on the branch, the services you choose and the plan duration. Call us on +91 98144 23444 or book a free trial and our team will walk you through the current plans.",
+    a: "Membership pricing depends on the branch, the services you choose and the plan duration. Call us on +91 98144 23444 or send a membership enquiry and our team will walk you through the current plans.",
   },
   {
     q: "As a beginner, how can I find out which workout program is right for me?",

@@ -76,7 +76,7 @@ export const services: Record<string, ServiceContent> = {
     title: "Yoga",
     seoTitle: "Yoga Classes in Ludhiana",
     description:
-      "Yoga classes at OZMO Gym, Ludhiana — guided sessions for flexibility, strength and stress relief, for beginners and regular practitioners. Book a free trial.",
+      "Yoga classes at OZMO Gym, Ludhiana — guided sessions for flexibility, strength and stress relief, for beginners and regular practitioners. Enquire today.",
     hero: "/images/franchise-training.jpg",
     slides: [
       { src: "/images/franchise-training.jpg", alt: "Group class" },
@@ -120,7 +120,7 @@ export const services: Record<string, ServiceContent> = {
     title: "Kickfit",
     seoTitle: "Kickboxing & Cross-fit Classes in Ludhiana",
     description:
-      "Kickfit at OZMO Gym, Ludhiana — high-energy kickboxing, HIIT and cross-fit classes with expert coaches. Burn fat and build conditioning. Book a free trial.",
+      "Kickfit at OZMO Gym, Ludhiana — high-energy kickboxing, HIIT and cross-fit classes with expert coaches. Burn fat and build conditioning. Enquire today.",
     hero: "/images/franchise-group.jpg",
     slides: [
       { src: "/images/franchise-group.jpg", alt: "Kickfit class" },
@@ -164,7 +164,7 @@ export const services: Record<string, ServiceContent> = {
     title: "Swimming",
     seoTitle: "Swimming Classes in Ludhiana",
     description:
-      "Swimming at OZMO, Ludhiana — learn-to-swim coaching, lap swimming and aqua fitness, with showers, lockers and steam rooms. Book a free trial.",
+      "Swimming at OZMO, Ludhiana — learn-to-swim coaching, lap swimming and aqua fitness, with showers, lockers and steam rooms. Enquire today.",
     hero: "/images/premium-washroom.jpg",
     slides: [
       { src: "/images/premium-washroom.jpg", alt: "Changing rooms" },

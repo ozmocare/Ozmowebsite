@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Bike, Lock, MapPin, ShowerHead, Sparkles } from "lucide-react";
 import Faq from "@/components/Faq";
-import { TrialForm } from "@/components/LeadForms";
+import { JoinForm } from "@/components/LeadForms";
 import { LudhianaMap } from "@/components/Locations";
 import Marquee from "@/components/Marquee";
 import Photo from "@/components/Photo";
@@ -42,8 +42,8 @@ export default function Home() {
             across {openLocations.length} gyms in Ludhiana and Jagraon.
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
-            <Link href="#trial" className="btn-primary">
-              Book a free trial <ArrowRight size={18} />
+            <Link href="#join" className="btn-primary">
+              Join OZMO <ArrowRight size={18} />
             </Link>
             <Link href="/locations" className="btn-ghost">
               <MapPin size={17} /> Find a gym near you
@@ -192,13 +192,13 @@ export default function Home() {
       <Faq items={homeFaqs} />
 
       <FormSection
-        id="trial"
-        eyebrow="Free 1-day trial"
-        title="Your first workout is on us"
-        text="Sign up for a free 1-day trial and experience every OZMO facility. Pick your nearest gym and we'll call to confirm a time."
-        points={["Full access to the gym for a day", "Free trainer walkthrough", "No payment, no obligation"]}
+        id="join"
+        eyebrow="Membership enquiry"
+        title="Start your OZMO journey"
+        text="Tell us where you'd like to train and our team will call you with membership plans, pricing and timings."
+        points={["Membership plans for every budget", "Tour the gym before you join", "Personal training available"]}
       >
-        <TrialForm />
+        <JoinForm />
       </FormSection>
     </>
   );

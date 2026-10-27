@@ -37,7 +37,7 @@ export default function ContactPage() {
             Happy to <span className="text-brand">help</span>
           </>
         }
-        lead="Questions about memberships, trials or the franchise? Send us a message or call your nearest OZMO."
+        lead="Questions about memberships, timings or the franchise? Send us a message or call your nearest OZMO."
         image="/images/premium-gym.jpg"
         crumbs={[{ name: "Contact", href: "/contact" }]}
       />

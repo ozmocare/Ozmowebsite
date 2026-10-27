@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     template: "%s | OZMO Gym",
   },
   description:
-    "OZMO Gym & Spa — premium gyms across Ludhiana and Jagraon with modern equipment, expert trainers, cardio, cross-fit, yoga, swimming, steam and spa. Book a free 1-day trial.",
+    "OZMO Gym & Spa — premium gyms across Ludhiana and Jagraon with modern equipment, expert trainers, cardio, cross-fit, yoga, swimming, steam and spa. Enquire about membership today.",
   keywords: [
     "gym in Ludhiana",
     "best gym in Ludhiana",

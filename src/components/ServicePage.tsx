@@ -2,7 +2,7 @@ import { Bike, Clock, UserCheck, Users } from "lucide-react";
 import Carousel from "./Carousel";
 import Faq from "./Faq";
 import JsonLd, { breadcrumbSchema } from "./JsonLd";
-import { TrialForm } from "./LeadForms";
+import { JoinForm } from "./LeadForms";
 import Marquee from "./Marquee";
 import Reveal from "./Reveal";
 import { CtaBand, FormSection, ImageCard, PageHero, SectionHeading } from "./Sections";
@@ -124,13 +124,13 @@ export default function ServicePage({ service }: { service: ServiceContent }) {
       <Faq items={homeFaqs} />
 
       <FormSection
-        id="trial"
-        eyebrow="Free 1-day trial"
-        title="Try OZMO free for a day"
-        text={`Experience ${service.title.toLowerCase()} and every other OZMO facility — on us. Pick your nearest gym and we'll call to confirm.`}
-        points={["Full access for a day", "Trainer walkthrough", "No payment needed"]}
+        id="join"
+        eyebrow="Membership enquiry"
+        title="Join OZMO"
+        text={`Interested in ${service.title.toLowerCase()} at OZMO? Pick your nearest gym and our team will call you with plans, pricing and timings.`}
+        points={["Membership plans & pricing", "Tour the gym before you join", "Personal training options"]}
       >
-        <TrialForm />
+        <JoinForm />
       </FormSection>
     </>
   );

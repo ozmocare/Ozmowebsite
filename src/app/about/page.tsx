@@ -101,9 +101,9 @@ export default function AboutPage() {
 
       <CtaBand
         eyebrow="Start today"
-        title="Your first workout is free"
-        text="Book a free 1-day trial at any OZMO gym and see the difference for yourself."
-        primary={{ label: "Book a free trial", href: "/#trial" }}
+        title="Ready to start?"
+        text="Visit your nearest OZMO or send us a membership enquiry — our team will help you pick the right plan."
+        primary={{ label: "Enquire about membership", href: "/#join" }}
         secondary={{ label: "Find a gym", href: "/locations" }}
       />
     </>

@@ -1,7 +1,7 @@
-// Stores website form submissions (trial / franchise / contact) in the Supabase `leads` table.
+// Stores website form submissions (membership/contact and franchise enquiries) in the Supabase `leads` table.
 // Table + RLS policy: see supabase/schema.sql
 
-const TYPES = ["trial", "franchise", "contact"] as const;
+const TYPES = ["franchise", "contact"] as const;
 const FIELDS = ["name", "phone", "email", "service", "branch", "city", "budget", "message"] as const;
 
 const clean = (v: unknown, max: number) => (typeof v === "string" ? v.trim().slice(0, max) : "");
@@ -27,8 +27,8 @@ export async function POST(request: Request) {
   if (type !== "contact" && !lead.phone) {
     return Response.json({ error: "Please enter your phone number." }, { status: 400 });
   }
-  if (type === "contact" && (!lead.email || !lead.message)) {
-    return Response.json({ error: "Please enter your email and message." }, { status: 400 });
+  if (type === "contact" && !lead.email && !lead.phone) {
+    return Response.json({ error: "Please enter your phone number or email." }, { status: 400 });
   }
   if (lead.email && !/^\S+@\S+\.\S+$/.test(lead.email)) {
     return Response.json({ error: "Please enter a valid email address." }, { status: 400 });

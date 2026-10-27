@@ -105,8 +105,8 @@ export default function Header() {
             >
               <Phone size={16} className="text-brand" /> {site.phone}
             </a>
-            <Link href="/#trial" className="btn-primary px-5 py-2.5 text-sm">
-              Free trial
+            <Link href="/#join" className="btn-primary px-5 py-2.5 text-sm">
+              Join now
             </Link>
             <button
               type="button"

@@ -228,7 +228,7 @@ export const transformations = [
 export const homeFaqs = [
   {
     q: "How much does an OZMO gym membership cost?",
-    a: "Membership pricing depends on the branch, the services you choose and the plan duration. Call us on +91 98144 23444 or book a free trial and our team will walk you through the current plans.",
+    a: "Membership pricing depends on the branch, the services you choose and the plan duration. Call us on +91 98144 23444 or send a membership enquiry and our team will walk you through the current plans.",
   },
   {
     q: "As a beginner, how can I find out which workout program is right for me?",
@@ -362,3 +362,10 @@ export const propertyChecklist = [
   "Dense residential or office catchment within 3 km",
   "Power load and water supply suitable for a gym & spa",
 ];
+
+/** The three headline numbers in the franchise hero (DRAFT — confirm with OZMO). */
+export const franchiseHighlights = [
+  { value: "30–40%", label: "Return on investment", tone: "brand" },
+  { value: "₹50 L", label: "Starting investment", tone: "dark" },
+  { value: "100%", label: "Marketing support", tone: "brand" },
+] as const;

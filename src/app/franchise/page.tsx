@@ -19,7 +19,7 @@ import {
 import Faq from "@/components/Faq";
 import JsonLd, { breadcrumbSchema } from "@/components/JsonLd";
 import { FranchiseForm } from "@/components/LeadForms";
-import { NetworkMap } from "@/components/Locations";
+import { LudhianaMap } from "@/components/Locations";
 import Photo from "@/components/Photo";
 import Reveal from "@/components/Reveal";
 import RoiCalculator from "@/components/RoiCalculator";
@@ -464,7 +464,7 @@ export default function FranchisePage() {
             </a>
           </div>
           <Reveal>
-            <NetworkMap />
+            <LudhianaMap />
           </Reveal>
         </div>
       </section>

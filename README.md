@@ -6,11 +6,11 @@ Next.js 16 (App Router) + Tailwind CSS 4. Form submissions are stored in Supabas
 
 | Route | Content |
 | --- | --- |
-| `/` | Home: hero, services, facilities, locations + network map, transformations, franchise CTA, testimonials, FAQ, membership enquiry form |
+| `/` | Home: hero, services, facilities, locations + Google map, transformations, franchise CTA, testimonials, FAQ, membership enquiry form |
 | `/locations` | All gyms (open + opening soon), interactive map |
 | `/locations/[slug]` | One SEO page per gym that has a full address (title, map, directions, membership enquiry form, structured data) |
 | `/franchise` | Franchise sales page: headline figures, why a franchise, at-a-glance terms, formats, investment breakdown + ROI calculator, support, success tools, property needs, steps, FAQ, enquiry form |
-| `/about` | Story, stats, network map, mission, team, testimonials |
+| `/about` | Story, stats, Google map of branches, mission, team, testimonials |
 | `/services/gym` `/yoga` `/kickfit` `/swimming` | Service pages (shared layout in `src/components/ServicePage.tsx`) |
 | `/contact` | Contact form, contact cards, location finder |
 | `/api/leads` | Receives all three forms and inserts into Supabase |

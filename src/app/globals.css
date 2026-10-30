@@ -13,7 +13,7 @@
   --font-sans: var(--font-body);
   --font-display: var(--font-display);
   --animate-marquee: marquee 40s linear infinite;
-  --animate-pulse-ring: pulse-ring 2.4s ease-out infinite;
+  
 
   @keyframes marquee {
     from {

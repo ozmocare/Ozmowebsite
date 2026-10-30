@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import JsonLd, { breadcrumbSchema } from "@/components/JsonLd";
 import LocationFinder from "@/components/LocationFinder";
-import { LocationCard, NetworkMap } from "@/components/Locations";
+import { LocationCard, LudhianaMap } from "@/components/Locations";
 import Reveal from "@/components/Reveal";
 import { CtaBand, PageHero, SectionHeading } from "@/components/Sections";
 import { openLocations, soonLocations } from "@/lib/site";
@@ -81,7 +81,7 @@ export default function LocationsPage() {
             </ul>
           </div>
           <Reveal className="lg:sticky lg:top-28">
-            <NetworkMap />
+            <LudhianaMap />
           </Reveal>
         </div>
       </section>

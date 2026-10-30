@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { HeartPulse, UserCheck, Users } from "lucide-react";
 import JsonLd, { breadcrumbSchema } from "@/components/JsonLd";
-import { NetworkMap } from "@/components/Locations";
+import { LudhianaMap } from "@/components/Locations";
 import Photo from "@/components/Photo";
 import Reveal from "@/components/Reveal";
 import { CtaBand, PageHero, SectionHeading, Testimonials } from "@/components/Sections";
@@ -91,7 +91,7 @@ export default function AboutPage() {
               .join(", ")}. Wherever you are, there's an OZMO close by.`}
           />
           <Reveal>
-            <NetworkMap />
+            <LudhianaMap />
           </Reveal>
         </div>
       </section>

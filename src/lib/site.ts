@@ -152,15 +152,6 @@ export const directionsHref = (l: Location) =>
     l.street ? `${l.brand ?? "OZMO Gym"} ${fullAddress(l)}` : `OZMO Gym ${l.area} ${l.city}`,
   )}`;
 
-/** Town markers for the Punjab network map (lat/lon of each town). */
-export const towns: { name: string; lat: number; lon: number; label: "above" | "below" | "right"; dx?: number }[] = [
-  { name: "Ludhiana", lat: 30.901, lon: 75.857, label: "above" },
-  { name: "Jagraon", lat: 30.789, lon: 75.473, label: "below" },
-  { name: "Sahnewal", lat: 30.849, lon: 75.951, label: "below", dx: -12 },
-  { name: "Khanna", lat: 30.705, lon: 76.222, label: "right", dx: 6 },
-  { name: "Moga", lat: 30.817, lon: 75.171, label: "above" },
-];
-
 /* ------------------------------------------------------------------ */
 /* Brand numbers                                                       */
 /* ------------------------------------------------------------------ */

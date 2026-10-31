@@ -13,7 +13,9 @@ Next.js 16 (App Router) + Tailwind CSS 4. Form submissions are stored in Supabas
 | `/about` | Story, stats, Google map of branches, mission, team, testimonials |
 | `/services/gym` `/yoga` `/kickfit` `/swimming` | Service pages (shared layout in `src/components/ServicePage.tsx`) |
 | `/contact` | Contact form, contact cards, location finder |
-| `/api/leads` | Receives all three forms and inserts into Supabase |
+| `/enquire` | Google Ads landing page: no menu, short call-back form (not indexed by Google) |
+| `/thank-you` | After the landing form; reports the Google Ads conversion (not indexed) |
+| `/api/leads` | Receives every form; saves to Supabase and the OZMO Google Sheet |
 
 SEO: per-page titles/descriptions/canonicals, Open Graph image, `/sitemap.xml`, `/robots.txt`, and JSON-LD (Organization, ExerciseGym per location, FAQPage, BreadcrumbList).
 Set `NEXT_PUBLIC_SITE_URL` (e.g. `https://ozmogym.com`) in Vercel once a custom domain is live.
@@ -27,6 +29,12 @@ Set `NEXT_PUBLIC_SITE_URL` (e.g. `https://ozmogym.com`) in Vercel once a custom 
 - **Team members** → `src/components/Team.tsx`
 - **Colours and fonts** → `src/app/globals.css` and `src/app/layout.tsx` (brand yellow `#FCEE00` is taken from the logo)
 - **Photos** → `public/images/` (replace a file with the same name and it updates everywhere). Logo → `public/brand/ozmo-logo.png`
+
+## Google Ads
+
+- Use `https://<domain>/enquire` as the ad's **Final URL**. Turn on **auto-tagging** in Google Ads (adds `gclid`); optionally add UTM tags with a tracking template, e.g. `{lpurl}?utm_source=google&utm_medium=cpc&utm_campaign={campaignid}&utm_term={keyword}`.
+- Conversion tracking: in Google Ads create a conversion action (**Goals → Conversions → New → Website → Submit lead form**, count **One**), open **Tag setup → Install the tag yourself**, and copy the `AW-…` ID and the conversion label into Vercel as `NEXT_PUBLIC_GOOGLE_ADS_ID` and `NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_LABEL`, then redeploy. The conversion fires once per lead on `/thank-you`.
+- Leads land in the Google Sheet with campaign, keyword and click ID — setup in [google-sheets/README.md](google-sheets/README.md).
 
 ## Run locally
 

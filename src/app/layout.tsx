@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Montserrat } from "next/font/google";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import GoogleAds from "@/components/GoogleAds";
 import JsonLd, { organizationSchema } from "@/components/JsonLd";
 import { siteUrl } from "@/lib/site";
 import "./globals.css";
@@ -55,9 +54,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="en-IN" className={`${body.variable} ${display.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
         <JsonLd data={organizationSchema()} />
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <GoogleAds />
+        {children}
       </body>
     </html>
   );

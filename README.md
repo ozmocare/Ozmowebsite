@@ -20,7 +20,7 @@ Next.js 16 (App Router) + Tailwind CSS 4. Form submissions are stored in Supabas
 | `/api/leads` | Receives every form; saves to Supabase and the OZMO Google Sheet |
 
 SEO: per-page titles/descriptions/canonicals, Open Graph image, `/sitemap.xml`, `/robots.txt`, and JSON-LD (Organization, ExerciseGym per location, FAQPage, BreadcrumbList).
-Set `NEXT_PUBLIC_SITE_URL` (e.g. `https://ozmogym.com`) in Vercel once a custom domain is live.
+Live at https://www.ozmogyms.com (ozmogyms.com redirects there). That is the default site URL; set `NEXT_PUBLIC_SITE_URL` in Vercel only if the domain changes.
 
 ## Where to edit things
 

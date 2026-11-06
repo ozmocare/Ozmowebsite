@@ -34,7 +34,7 @@ export default function LocationsPage() {
           </>
         }
         lead={`${openLocations.length} gyms across Ludhiana and Jagraon, open 5 a.m. to 11 p.m. every day — and ${soonLocations.length} more opening soon.`}
-        image="/images/premium-gym.jpg"
+        image="/images/luxe-cardio-floor.jpg"
         crumbs={[{ name: "Locations", href: "/locations" }]}
       />
 

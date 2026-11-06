@@ -75,7 +75,7 @@ export default async function LocationPage({ params }: PageProps<"/locations/[sl
           </>
         }
         lead={`${locationTitle(l)} — premium strength and cardio floors, expert trainers and post-workout recovery, open every day from 5 a.m.`}
-        image={l.image ?? "/images/premium-gym.jpg"}
+        image={l.image ?? "/images/luxe-strength-floor.jpg"}
         crumbs={[
           { name: "Locations", href: "/locations" },
           { name: l.area, href: `/locations/${l.slug}` },

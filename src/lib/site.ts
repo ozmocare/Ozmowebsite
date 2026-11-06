@@ -65,7 +65,7 @@ export const locations: Location[] = [
     street: "D Block, South City, Ayali Khurd",
     postalCode: "142027",
     phone: "+91 98144 23444",
-    image: "/images/branch-luxe.jpg",
+    image: "/images/luxe-logo-wall.jpg",
   },
   {
     slug: "dugri",
@@ -313,7 +313,7 @@ export const franchiseFormats = [
     area: "3,000 – 5,000 sq ft",
     investment: "₹50 L – ₹75 L",
     fee: "₹5 L",
-    image: "/images/equip-chest.jpg",
+    image: "/images/luxe-plate-rack.jpg",
     features: ["Strength & cardio floors", "Functional training zone", "Personal training", "Changing rooms & lockers"],
   },
   {
@@ -322,7 +322,7 @@ export const franchiseFormats = [
     area: "5,000 – 8,000 sq ft",
     investment: "₹75 L – ₹1.2 Cr",
     fee: "₹7.5 L",
-    image: "/images/premium-gym.jpg",
+    image: "/images/luxe-strength-floor.jpg",
     features: ["Everything in OZMO Gym", "Group class studio", "Steam & sauna", "Premium washrooms"],
   },
   {
@@ -331,7 +331,7 @@ export const franchiseFormats = [
     area: "8,000 – 10,000+ sq ft",
     investment: "₹1.2 Cr – ₹1.5 Cr+",
     fee: "₹10 L",
-    image: "/images/premium-sauna.jpg",
+    image: "/images/luxe-reception.jpg",
     features: ["Everything in Gym & Spa", "Luxury interiors & lounge", "Spa therapies", "Dedicated recovery zone"],
   },
 ];

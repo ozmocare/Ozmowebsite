@@ -22,11 +22,11 @@ export const services: Record<string, ServiceContent> = {
     seoTitle: "Gym in Ludhiana — Strength & Cardio Training",
     description:
       "Train at OZMO, Ludhiana's premium gym chain: strength, cardio and functional zones with Matrix and Aerofit equipment, expert trainers and steam & spa. Open 5 a.m.–11 p.m.",
-    hero: "/images/premium-gym.jpg",
+    hero: "/images/luxe-corridor.jpg",
     slides: [
-      { src: "/images/slide-athlete.jpg", alt: "Athlete training with a resistance band" },
-      { src: "/images/equip-chest.jpg", alt: "Free weights area" },
-      { src: "/images/about-gym.jpg", alt: "Strength machines" },
+      { src: "/images/luxe-strength-windows.jpg", alt: "Strength floor at OZMO South City" },
+      { src: "/images/luxe-dumbbells.jpg", alt: "Dumbbell rack at OZMO" },
+      { src: "/images/luxe-ozmo-plates.jpg", alt: "OZMO bumper plates" },
     ],
     introTitle: "We provide the best gym services for you",
     features: [
@@ -42,32 +42,32 @@ export const services: Record<string, ServiceContent> = {
       {
         title: "Chest workout area",
         text: "Build a powerful chest with our state-of-the-art equipment in the Chest Workout Area. Perfect for strength and definition.",
-        image: "/images/equip-chest.jpg",
+        image: "/images/luxe-dumbbells.jpg",
       },
       {
         title: "Back workout area",
         text: "Strengthen your back and improve posture in our Back Workout Area. Comprehensive equipment for a complete back workout.",
-        image: "/images/equip-back.jpg",
+        image: "/images/luxe-cables.jpg",
       },
       {
         title: "Shoulder workout area",
         text: "Develop strong, defined shoulders in our Shoulder Workout Area, with free weights and machines for every level.",
-        image: "/images/about-gym.jpg",
+        image: "/images/luxe-plate-rack.jpg",
       },
       {
         title: "Leg workout area",
         text: "Get ready to feel the burn in our Leg Workout Area. Sculpt and strengthen your legs with the best machines and exercises.",
-        image: "/images/premium-gym.jpg",
+        image: "/images/luxe-strength-floor.jpg",
       },
       {
         title: "Abdominal workout area",
         text: "Achieve those six-pack abs in our Abdominal Workout Area. Specialised equipment and exercises for a strong core.",
-        image: "/images/franchise-training.jpg",
+        image: "/images/luxe-functional-terrace.jpg",
       },
       {
         title: "Cardio workout area",
         text: "Boost your endurance and burn calories in our Cardio Workout Area. Enjoy a variety of machines to keep your heart pumping.",
-        image: "/images/branch-rajguru.jpg",
+        image: "/images/luxe-treadmills.jpg",
       },
     ],
   },
@@ -77,9 +77,9 @@ export const services: Record<string, ServiceContent> = {
     seoTitle: "Yoga Classes in Ludhiana",
     description:
       "Yoga classes at OZMO Gym, Ludhiana — guided sessions for flexibility, strength and stress relief, for beginners and regular practitioners. Enquire today.",
-    hero: "/images/franchise-training.jpg",
+    hero: "/images/luxe-studio-chandeliers.jpg",
     slides: [
-      { src: "/images/franchise-training.jpg", alt: "Group class" },
+      { src: "/images/luxe-group-studio.jpg", alt: "Group studio at OZMO South City" },
       { src: "/images/franchise-class.jpg", alt: "Studio session" },
     ],
     introTitle: "We provide the best yoga services for you",
@@ -124,7 +124,7 @@ export const services: Record<string, ServiceContent> = {
     hero: "/images/franchise-group.jpg",
     slides: [
       { src: "/images/franchise-group.jpg", alt: "Kickfit class" },
-      { src: "/images/franchise-class.jpg", alt: "Group conditioning class" },
+      { src: "/images/luxe-functional-terrace.jpg", alt: "Functional training terrace" },
     ],
     introTitle: "We provide the best kickfit services for you",
     features: [
@@ -140,7 +140,7 @@ export const services: Record<string, ServiceContent> = {
       {
         title: "Kickboxing basics",
         text: "Master stance, footwork, punches and kicks with step-by-step coaching.",
-        image: "/images/svc-crossfit.jpg",
+        image: "/images/luxe-punching-bag.jpg",
       },
       {
         title: "HIIT conditioning",
@@ -150,7 +150,7 @@ export const services: Record<string, ServiceContent> = {
       {
         title: "Cross-fit circuits",
         text: "Functional strength circuits using kettlebells, ropes and bodyweight movements.",
-        image: "/images/equip-chest.jpg",
+        image: "/images/luxe-functional-gear.jpg",
       },
       {
         title: "Core & agility",
@@ -221,7 +221,7 @@ export const amenities = [
   {
     title: "Personal locker",
     text: "Personal lockers help you keep your property safe and convenient.",
-    image: "/images/premium-gym.jpg",
+    image: "/images/luxe-reception.jpg",
   },
   {
     title: "Lounge area",

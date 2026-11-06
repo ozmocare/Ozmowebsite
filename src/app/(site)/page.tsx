@@ -12,10 +12,10 @@ import Transformations from "@/components/Transformations";
 import { homeFaqs, locationHref, openLocations, site, soonLocations, stats } from "@/lib/site";
 
 const services = [
-  { label: "Gym", text: "Strength & free-weight zones", image: "/images/svc-gym.jpg", href: "/services/gym" },
-  { label: "Cardio", text: "Treadmills, bikes & HIIT", image: "/images/svc-cardio.jpg", href: "/services/gym" },
-  { label: "Kickfit", text: "Kickboxing & cross-fit", image: "/images/svc-crossfit.jpg", href: "/services/kickfit" },
-  { label: "Yoga", text: "Flexibility & mindfulness", image: "/images/svc-yoga.jpg", href: "/services/yoga" },
+  { label: "Gym", text: "Strength & free-weight zones", image: "/images/luxe-plate-rack.jpg", href: "/services/gym" },
+  { label: "Cardio", text: "Treadmills, bikes & HIIT", image: "/images/luxe-treadmills.jpg", href: "/services/gym" },
+  { label: "Kickfit", text: "Kickboxing & cross-fit", image: "/images/luxe-punching-bag.jpg", href: "/services/kickfit" },
+  { label: "Yoga", text: "Flexibility & mindfulness", image: "/images/luxe-group-studio.jpg", href: "/services/yoga" },
   { label: "Swimming", text: "Coaching & lap swims", image: "/images/svc-swimming.jpg", href: "/services/swimming" },
 ];
 
@@ -132,9 +132,9 @@ export default function Home() {
             </ul>
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <Photo src="/images/premium-gym.jpg" alt="OZMO gym floor" className="col-span-2 aspect-[16/9] rounded-2xl" />
-            <Photo src="/images/premium-washroom.jpg" alt="Premium changing rooms" sizes="(min-width: 1024px) 25vw, 50vw" className="aspect-square rounded-2xl" />
-            <Photo src="/images/premium-sauna.jpg" alt="Sauna at OZMO" sizes="(min-width: 1024px) 25vw, 50vw" className="aspect-square rounded-2xl" />
+            <Photo src="/images/luxe-strength-floor.jpg" alt="Strength floor at OZMO South City" className="col-span-2 aspect-[16/9] rounded-2xl" />
+            <Photo src="/images/luxe-spin-studio.jpg" alt="Spin Cinema studio at OZMO" sizes="(min-width: 1024px) 25vw, 50vw" className="aspect-square rounded-2xl" />
+            <Photo src="/images/luxe-reception.jpg" alt="OZMO Luxe reception" sizes="(min-width: 1024px) 25vw, 50vw" className="aspect-square rounded-2xl" />
           </div>
         </div>
       </section>

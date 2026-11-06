@@ -31,7 +31,7 @@ export default function EnquirePage() {
     <>
       {/* Hero + form */}
       <section className="relative isolate overflow-hidden pb-16 pt-28 md:pb-24 md:pt-32">
-        <Photo src="/images/slide-athlete.jpg" alt="" eager sizes="100vw" className="!absolute inset-0 -z-20" />
+        <Photo src="/images/luxe-strength-windows.jpg" alt="" eager sizes="100vw" className="!absolute inset-0 -z-20" />
         <div className="absolute inset-0 -z-10 bg-gradient-to-r from-ink via-ink/90 to-ink/60" />
         <div className="wrap grid items-center gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
           <div>
@@ -94,9 +94,9 @@ export default function EnquirePage() {
             ))}
           </ul>
           <div className="mt-6 grid grid-cols-3 gap-3 md:gap-4">
-            <Photo src="/images/premium-gym.jpg" alt="OZMO gym floor" sizes="33vw" className="aspect-[4/3] rounded-2xl" />
-            <Photo src="/images/premium-washroom.jpg" alt="Premium changing rooms" sizes="33vw" className="aspect-[4/3] rounded-2xl" />
-            <Photo src="/images/premium-sauna.jpg" alt="Sauna" sizes="33vw" className="aspect-[4/3] rounded-2xl" />
+            <Photo src="/images/luxe-strength-floor.jpg" alt="Strength floor at OZMO" sizes="33vw" className="aspect-[4/3] rounded-2xl" />
+            <Photo src="/images/luxe-spin-studio.jpg" alt="Spin studio at OZMO" sizes="33vw" className="aspect-[4/3] rounded-2xl" />
+            <Photo src="/images/luxe-group-studio.jpg" alt="Group studio at OZMO" sizes="33vw" className="aspect-[4/3] rounded-2xl" />
           </div>
         </div>
       </section>

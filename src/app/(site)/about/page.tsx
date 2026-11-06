@@ -39,7 +39,7 @@ export default function AboutPage() {
           </>
         }
         lead={`For ${site.foundedYears}+ years OZMO has helped people across Punjab transform body and mind — with premium gyms, expert trainers and a community that keeps you going.`}
-        image="/images/about-gym.jpg"
+        image="/images/luxe-corridor.jpg"
         crumbs={[{ name: "About", href: "/about" }]}
       />
 
@@ -73,7 +73,7 @@ export default function AboutPage() {
               ))}
             </ul>
           </div>
-          <Photo src="/images/slide-athlete.jpg" alt="Member training at OZMO" className="aspect-[4/5] rounded-3xl lg:aspect-[4/4.6]" />
+          <Photo src="/images/luxe-ozmo-plates.jpg" alt="OZMO branded plates" className="aspect-[4/5] rounded-3xl lg:aspect-[4/4.6]" />
         </div>
       </section>
 

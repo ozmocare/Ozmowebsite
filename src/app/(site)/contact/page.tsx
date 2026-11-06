@@ -38,7 +38,7 @@ export default function ContactPage() {
           </>
         }
         lead="Questions about memberships, timings or the franchise? Send us a message or call your nearest OZMO."
-        image="/images/premium-gym.jpg"
+        image="/images/luxe-reception.jpg"
         crumbs={[{ name: "Contact", href: "/contact" }]}
       />
 

@@ -23,11 +23,11 @@ export default function Faq({
           <p className="eyebrow text-ink">{eyebrow}</p>
           <h2 className="h2 mt-4">{title}</h2>
           <p className="mt-5 text-lg leading-relaxed text-ink/65">
-            Can&apos;t find what you&apos;re looking for? Call us on{" "}
-            <a href="tel:+919814423444" className="font-bold text-ink underline decoration-brand decoration-[3px] underline-offset-4">
-              +91 98144 23444
-            </a>
-            .
+            Can&apos;t find what you&apos;re looking for? Email us at{" "}
+            <a href="mailto:ozmocare@gmail.com" className="font-bold text-ink underline decoration-brand decoration-[3px] underline-offset-4">
+              ozmocare@gmail.com
+            </a>{" "}
+            or call your nearest branch.
           </p>
         </div>
         <ul className="divide-y divide-ink/10 border-y border-ink/10">

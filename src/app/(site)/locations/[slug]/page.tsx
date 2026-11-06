@@ -182,7 +182,7 @@ export default async function LocationPage({ params }: PageProps<"/locations/[sl
             <Link href="/locations" className="font-bold text-brand hover:underline">
               See all {openLocations.length} OZMO locations
             </Link>{" "}
-            or call {site.phone}.
+            or email {site.email}.
           </p>
         </div>
       </section>

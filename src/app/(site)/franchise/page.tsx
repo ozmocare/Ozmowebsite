@@ -8,6 +8,7 @@ import {
   Check,
   Download,
   Handshake,
+  Mail,
   Megaphone,
   Phone,
   Repeat,
@@ -139,8 +140,8 @@ export default function FranchisePage() {
           <a href="#details" className="btn-primary">
             See franchise details <ArrowRight size={18} />
           </a>
-          <a href={site.phoneHref} className="btn-ghost">
-            <Phone size={17} /> Talk to our franchise team
+          <a href={`mailto:${site.email}?subject=${encodeURIComponent("OZMO franchise enquiry")}`} className="btn-ghost">
+            <Mail size={17} /> Email our franchise team
           </a>
         </div>
       </PageHero>
@@ -483,8 +484,8 @@ export default function FranchisePage() {
 
       <p className="wrap -mt-10 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 pb-16 text-center text-white/55">
         <Download size={16} className="text-brand" /> Want the brochure first?{" "}
-        <a href={site.phoneHref} className="font-bold text-brand hover:underline">
-          Call {site.phone}
+        <a href={`mailto:${site.email}?subject=${encodeURIComponent("OZMO franchise brochure")}`} className="font-bold text-brand hover:underline">
+          Email {site.email}
         </a>{" "}
         or <Link href="/contact" className="font-bold text-brand hover:underline">message us</Link>.
       </p>

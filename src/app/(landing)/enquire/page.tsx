@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ArrowRight, Check, Clock, Dumbbell, MapPin, Phone, ShowerHead, Star, UserCheck } from "lucide-react";
+import { ArrowRight, Check, Clock, Dumbbell, MapPin, ShowerHead, Star, UserCheck } from "lucide-react";
 import AdsLeadForm from "@/components/AdsLeadForm";
 import Photo from "@/components/Photo";
 import { openLocations, site, testimonials } from "@/lib/site";
@@ -141,20 +141,14 @@ export default function EnquirePage() {
             <a href="#form" className="btn-dark">
               Get a call back <ArrowRight size={18} />
             </a>
-            <a href={site.phoneHref} className="btn border-2 border-ink/80 text-ink hover:bg-ink hover:text-brand">
-              <Phone size={17} /> {site.phone}
-            </a>
           </div>
         </div>
       </section>
 
       {/* Mobile sticky CTA */}
-      <div className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-[1fr_auto] gap-2 border-t border-white/10 bg-ink/95 p-3 backdrop-blur md:hidden">
-        <a href="#form" className="btn-primary">
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-ink/95 p-3 backdrop-blur md:hidden">
+        <a href="#form" className="btn-primary w-full">
           Get a call back
-        </a>
-        <a href={site.phoneHref} aria-label="Call OZMO" className="btn-ghost px-5">
-          <Phone size={18} />
         </a>
       </div>
       <div className="h-20 md:hidden" />

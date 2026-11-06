@@ -36,7 +36,6 @@ export function organizationSchema() {
     url: siteUrl,
     logo: `${siteUrl}/brand/ozmo-logo.png`,
     email: site.email,
-    telephone: site.phone.replace(/\s/g, ""),
     address: {
       "@type": "PostalAddress",
       streetAddress: "D Block, South City, Ayali Khurd",
@@ -59,7 +58,7 @@ export function gymSchema(l: Location) {
     name: `${l.brand ?? "OZMO Gym"} ${l.area}`,
     url: `${siteUrl}/locations/${l.slug}`,
     image: l.image ? `${siteUrl}${l.image}` : `${siteUrl}/brand/ozmo-logo.png`,
-    telephone: (l.phone ?? site.phone).replace(/\s/g, ""),
+    telephone: l.phone?.replace(/\s/g, ""),
     address: postal(l),
     openingHours: site.openingHours,
     parentOrganization: { "@id": `${siteUrl}/#organization` },

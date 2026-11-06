@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { ArrowUpRight, MapPin, Phone } from "lucide-react";
-import { fullAddress, mapSrc, openLocations, site, telHref } from "@/lib/site";
+import { fullAddress, mapSrc, openLocations, telHref } from "@/lib/site";
 
 /** Interactive list of open gyms with a live Google map of the selected one. */
 export default function LocationFinder() {
@@ -45,16 +45,18 @@ export default function LocationFinder() {
                       {l.street ? fullAddress(l) : "Address details coming soon"}
                     </span>
                     <span className="flex gap-2">
-                      <Phone size={16} className="mt-0.5 shrink-0 text-brand" /> {l.phone ?? site.phone}
+                      <Phone size={16} className="mt-0.5 shrink-0 text-brand" /> {l.phone ?? "Number coming soon"}
                     </span>
                   </span>
                 )}
               </button>
               {isActive && (
                 <div className="flex gap-2 px-5 pb-3 pt-1">
-                  <a href={telHref(l.phone ?? site.phone)} className="btn-primary px-4 py-2 text-sm">
-                    <Phone size={14} /> Call
-                  </a>
+                  {l.phone && (
+                    <a href={telHref(l.phone)} className="btn-primary px-4 py-2 text-sm">
+                      <Phone size={14} /> Call {l.area}
+                    </a>
+                  )}
                   {l.street && (
                     <Link href={`/locations/${l.slug}`} className="btn-ghost px-4 py-2 text-sm">
                       Gym details <ArrowUpRight size={14} />

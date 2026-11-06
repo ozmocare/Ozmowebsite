@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Clock, Mail, MapPin, Phone } from "lucide-react";
+import { Clock, Mail, MapPin } from "lucide-react";
 import Logo from "./Logo";
 import { SocialLinks } from "./Socials";
 import { locationHref, navLinks, openLocations, serviceLinks, site, soonLocations } from "@/lib/site";
@@ -55,12 +55,14 @@ export default function Footer() {
 
         <div>
           <h2 className="text-sm font-bold uppercase tracking-[0.18em] text-brand">Contact</h2>
-          <ul className="mt-5 space-y-4 text-white/70">
-            <li>
-              <a href={site.phoneHref} className="flex items-start gap-3 hover:text-brand">
-                <Phone size={18} className="mt-0.5 shrink-0 text-brand" /> {site.phone}
-              </a>
-            </li>
+          <p className="mt-5 text-sm leading-6 text-white/50">
+            For calls, use your branch&apos;s number on the{" "}
+            <Link href="/locations" className="text-brand hover:underline">
+              locations page
+            </Link>
+            .
+          </p>
+          <ul className="mt-4 space-y-4 text-white/70">
             <li>
               <a href={`mailto:${site.email}`} className="flex items-start gap-3 hover:text-brand">
                 <Mail size={18} className="mt-0.5 shrink-0 text-brand" /> {site.email}

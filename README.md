@@ -13,6 +13,8 @@ Next.js 16 (App Router) + Tailwind CSS 4. Form submissions are stored in Supabas
 | `/about` | Story, stats, Google map of branches, mission, team, testimonials |
 | `/services/gym` `/yoga` `/kickfit` `/swimming` | Service pages (shared layout in `src/components/ServicePage.tsx`) |
 | `/contact` | Contact form, contact cards, location finder |
+| `/blog`, `/blog/[slug]` | Blog list and articles (from Supabase `posts`), with article structured data and sitemap entries |
+| `/admin` | Blog portal for the management team: sign in, write (Markdown + image upload), save drafts, publish, delete. Not indexed |
 | `/enquire` | Google Ads landing page: no menu, short call-back form (not indexed by Google) |
 | `/thank-you` | After the landing form; reports the Google Ads conversion (not indexed) |
 | `/api/leads` | Receives every form; saves to Supabase and the OZMO Google Sheet |
@@ -29,6 +31,15 @@ Set `NEXT_PUBLIC_SITE_URL` (e.g. `https://ozmogym.com`) in Vercel once a custom 
 - **Team members** → `src/components/Team.tsx`
 - **Colours and fonts** → `src/app/globals.css` and `src/app/layout.tsx` (brand yellow `#FCEE00` is taken from the logo)
 - **Photos** → `public/images/` (replace a file with the same name and it updates everywhere). Logo → `public/brand/ozmo-logo.png`
+
+## Blog portal (management team)
+
+1. Supabase → **SQL Editor** → run [`supabase/blog.sql`](supabase/blog.sql) (creates `posts`, `blog_authors`, the `blog-images` storage bucket and permissions).
+2. For each writer: **Authentication → Users → Add user** (email + password, tick *Auto Confirm User*), then in SQL Editor:
+   `insert into public.blog_authors (email, name) values ('person@example.com', 'Full Name');`
+3. **Authentication → Sign In / Providers → turn off "Allow new users to sign up"** so only people you add can log in.
+4. Writers go to `https://<domain>/admin`, sign in, and click **New post**. **Publish** makes it live immediately; **Save draft** keeps it private.
+5. Remove a writer: `delete from public.blog_authors where email = 'person@example.com';` (and delete the user in Authentication).
 
 ## Google Ads
 

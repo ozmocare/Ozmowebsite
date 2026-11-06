@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { CheckCircle2, MapPin, Phone } from "lucide-react";
+import { CheckCircle2, MapPin } from "lucide-react";
 import ConversionPing from "@/components/ConversionPing";
-import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: { absolute: "Thank you — OZMO Gym" },
@@ -20,11 +19,11 @@ export default function ThankYouPage() {
           We&apos;ve received your details. The OZMO team will call you shortly with membership plans and timings.
         </p>
         <div className="mt-9 flex flex-wrap justify-center gap-3">
-          <a href={site.phoneHref} className="btn-primary">
-            <Phone size={17} /> Call us now
-          </a>
-          <Link href="/locations" className="btn-ghost">
+          <Link href="/locations" className="btn-primary">
             <MapPin size={17} /> Find your nearest OZMO
+          </Link>
+          <Link href="/blog" className="btn-ghost">
+            Read fitness tips on our blog
           </Link>
         </div>
         <p className="mt-8 text-sm text-white/45">

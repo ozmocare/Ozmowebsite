@@ -2,13 +2,28 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import { ArrowUpRight, ChevronDown, Menu, Phone, X } from "lucide-react";
+import { Suspense, useEffect, useState } from "react";
+import { ArrowUpRight, ChevronDown, Mail, Menu, X } from "lucide-react";
 import Logo from "./Logo";
 import { navLinks, serviceLinks, site, soonLocations } from "@/lib/site";
 
+/**
+ * Site header. Reading the URL (for the active-link highlight) is request data, so it sits in a
+ * Suspense boundary; the static shell renders the same header with no link highlighted.
+ */
 export default function Header() {
-  const pathname = usePathname();
+  return (
+    <Suspense fallback={<HeaderView pathname="" />}>
+      <HeaderWithPath />
+    </Suspense>
+  );
+}
+
+function HeaderWithPath() {
+  return <HeaderView pathname={usePathname()} />;
+}
+
+function HeaderView({ pathname }: { pathname: string }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -99,12 +114,6 @@ export default function Header() {
           </nav>
 
           <div className="ml-auto flex items-center gap-3 lg:ml-0">
-            <a
-              href={site.phoneHref}
-              className="hidden items-center gap-2 text-sm font-semibold text-white/85 hover:text-brand xl:flex"
-            >
-              <Phone size={16} className="text-brand" /> {site.phone}
-            </a>
             <Link href="/#join" className="btn-primary px-5 py-2.5 text-sm">
               Join now
             </Link>
@@ -139,8 +148,8 @@ export default function Header() {
                 </li>
               ))}
               <li className="mt-4 border-t border-white/10 pt-4">
-                <a href={site.phoneHref} className="flex items-center gap-2 font-semibold text-white/85">
-                  <Phone size={16} className="text-brand" /> {site.phone}
+                <a href={`mailto:${site.email}`} className="flex items-center gap-2 font-semibold text-white/85">
+                  <Mail size={16} className="text-brand" /> {site.email}
                 </a>
               </li>
             </ul>

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Clock, Mail, MapPin, PhoneCall } from "lucide-react";
+import { Clock, Mail, MapPin } from "lucide-react";
 import JsonLd, { breadcrumbSchema } from "@/components/JsonLd";
 import { ContactForm } from "@/components/LeadForms";
 import LocationFinder from "@/components/LocationFinder";
@@ -9,13 +9,12 @@ import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Contact OZMO Gym Ludhiana",
-  description: `Call ${site.phone}, email ${site.email} or send us a message. Find phone numbers and directions for every OZMO gym in Ludhiana and Jagraon.`,
+  description: `Email ${site.email} or send us a message. Find phone numbers and directions for every OZMO gym in Ludhiana and Jagraon.`,
   alternates: { canonical: "/contact" },
   openGraph: { url: "/contact" },
 };
 
 const cards = [
-  { icon: PhoneCall, label: "Call us", value: site.phone, href: site.phoneHref },
   { icon: Mail, label: "Email us", value: site.email, href: `mailto:${site.email}` },
   { icon: MapPin, label: "Head office", value: site.address },
   { icon: Clock, label: "Opening hours", value: "5 a.m. – 11 p.m., Monday to Sunday" },
@@ -37,7 +36,7 @@ export default function ContactPage() {
             Happy to <span className="text-brand">help</span>
           </>
         }
-        lead="Questions about memberships, timings or the franchise? Send us a message or call your nearest OZMO."
+        lead="Questions about memberships, timings or the franchise? Send us a message, or call your branch directly — every branch number is listed below."
         image="/images/luxe-reception.jpg"
         crumbs={[{ name: "Contact", href: "/contact" }]}
       />

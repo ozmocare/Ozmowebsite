@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight, Clock, MapPin, Navigation, Phone } from "lucide-react";
+import { ArrowUpRight, Clock, Mail, MapPin, Navigation, Phone } from "lucide-react";
 import Photo from "./Photo";
 import {
   directionsHref,
@@ -46,7 +46,7 @@ export function LocationCard({ l }: { l: Location }) {
 
         {soon ? (
           <p className="mt-3 leading-7 text-white/60">
-            A new OZMO is coming to {l.area}. Call us to be first in line for launch offers.
+            A new OZMO is coming to {l.area}. Register your interest to be first in line for launch offers.
           </p>
         ) : hasDetails ? (
           <ul className="mt-4 space-y-2.5 text-[15px] text-white/70">
@@ -65,7 +65,7 @@ export function LocationCard({ l }: { l: Location }) {
           </ul>
         ) : (
           <p className="mt-3 leading-7 text-white/60">
-            Call {site.phone} for directions and timings at our {l.area} gym.
+            Branch phone number and address coming soon. Email {site.email} for timings at our {l.area} gym.
           </p>
         )}
 
@@ -86,8 +86,8 @@ export function LocationCard({ l }: { l: Location }) {
             </a>
           )}
           {soon && (
-            <a href={site.phoneHref} className="btn-ghost px-5 py-2.5 text-sm">
-              <Phone size={15} /> Register interest
+            <a href={`mailto:${site.email}?subject=${encodeURIComponent(`OZMO ${l.area} — register interest`)}`} className="btn-ghost px-5 py-2.5 text-sm">
+              <Mail size={15} /> Register interest
             </a>
           )}
         </div>

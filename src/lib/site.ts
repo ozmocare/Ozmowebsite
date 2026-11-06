@@ -5,8 +5,6 @@ export const site = {
   legalName: "OZMO Gym & Spa",
   hours: "5 a.m - 11 p.m (Mon - Sun)",
   openingHours: "Mo-Su 05:00-23:00",
-  phone: "+91 98144 23444",
-  phoneHref: "tel:+919814423444",
   email: "ozmocare@gmail.com",
   address: "D Block, South City, Ayali Khurd, Ludhiana, Punjab 142027",
   foundedYears: 12,
@@ -30,6 +28,7 @@ export const navLinks = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Locations", href: "/locations" },
+  { label: "Blog", href: "/blog" },
   { label: "Franchise", href: "/franchise" },
   { label: "Contact", href: "/contact" },
 ];
@@ -219,7 +218,7 @@ export const transformations = [
 export const homeFaqs = [
   {
     q: "How much does an OZMO gym membership cost?",
-    a: "Membership pricing depends on the branch, the services you choose and the plan duration. Call us on +91 98144 23444 or send a membership enquiry and our team will walk you through the current plans.",
+    a: "Membership pricing depends on the branch, the services you choose and the plan duration. Call your nearest OZMO branch or send a membership enquiry and our team will walk you through the current plans.",
   },
   {
     q: "As a beginner, how can I find out which workout program is right for me?",

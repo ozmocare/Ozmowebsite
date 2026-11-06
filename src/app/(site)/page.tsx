@@ -24,9 +24,9 @@ export default function Home() {
     <>
       {/* Hero */}
       <section className="relative isolate flex min-h-[100svh] flex-col justify-end overflow-hidden pb-10 pt-40">
-        <Photo src="/images/slide-athlete.jpg" alt="" eager sizes="100vw" className="!absolute inset-0 -z-20" />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-ink via-ink/80 to-ink/20" />
-        <div className="absolute inset-x-0 bottom-0 -z-10 h-1/2 bg-gradient-to-t from-ink to-transparent" />
+        <Photo src="/images/hero-gym.jpg" alt="Inside an OZMO gym" eager sizes="100vw" className="!absolute inset-0 -z-20" imgClassName="object-[62%_center]" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-ink/95 via-ink/60 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 -z-10 h-2/5 bg-gradient-to-t from-ink to-transparent" />
 
         <div className="wrap">
           <p className="eyebrow">Ludhiana&apos;s premium gym &amp; spa chain</p>

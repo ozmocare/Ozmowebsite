@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Bike, Lock, MapPin, ShowerHead, Sparkles } from "lucide-react";
 import Faq from "@/components/Faq";
+import LatestPosts from "@/components/LatestPosts";
 import { JoinForm } from "@/components/LeadForms";
 import { LudhianaMap } from "@/components/Locations";
 import Marquee from "@/components/Marquee";
@@ -200,6 +201,8 @@ export default function Home() {
       >
         <JoinForm />
       </FormSection>
+
+      <LatestPosts />
     </>
   );
 }

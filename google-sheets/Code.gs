@@ -11,6 +11,9 @@
 // Must match GOOGLE_SHEETS_SECRET in Vercel. Use a long random string.
 const SECRET = "CHANGE-ME-to-a-long-random-string";
 const SHEET_NAME = "Leads";
+// The OZMO leads spreadsheet: the long ID in its link (docs.google.com/spreadsheets/d/<ID>/edit).
+// Leads always go here, even if this script was created from a different file.
+const SPREADSHEET_ID = "PASTE-THE-SHEET-ID-HERE";
 
 // Column order in the sheet. Keys are the fields the website sends.
 const COLUMNS = [
@@ -49,14 +52,14 @@ function doPost(e) {
     } finally {
       lock.releaseLock();
     }
-    return reply({ ok: true });
+    return reply({ ok: true, tab: SHEET_NAME, sheet: SpreadsheetApp.openById(SPREADSHEET_ID).getName() });
   } catch (err) {
     return reply({ ok: false, error: String(err) });
   }
 }
 
 function getSheet() {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
   const sheet = ss.getSheetByName(SHEET_NAME) || ss.insertSheet(SHEET_NAME);
   if (sheet.getLastRow() === 0) {
     sheet.appendRow(COLUMNS.map(([header]) => header));

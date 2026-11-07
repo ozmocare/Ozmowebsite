@@ -1,3 +1,4 @@
+import { site } from "@/lib/site";
 // Stores website form submissions (membership/contact and franchise enquiries).
 // Every lead goes to the Supabase `leads` table (supabase/schema.sql) AND, when configured,
 // to the OZMO Google Sheet via an Apps Script web app (google-sheets/Code.gs).
@@ -104,19 +105,24 @@ export async function POST(request: Request) {
     ? { ...lead, message: [lead.message, ...tracking].filter(Boolean).join(" · ").slice(0, 4000) }
     : lead;
 
+  // The Google Sheet is for membership enquiries only. Franchise enquiries are kept in Supabase
+  // until OZMO sets up a separate franchise lead flow.
+  const toSheet = type !== "franchise";
   const [inSupabase, inSheet] = await Promise.all([
     saveToSupabase(supabaseLead),
-    saveToSheet({
-      ...lead,
-      ...extra,
-      form: type === "franchise" ? "Franchise" : extra.source === "ads-landing" ? "Ads landing page" : "Website",
-      submitted_at: new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }),
-    }),
+    toSheet
+      ? saveToSheet({
+          ...lead,
+          ...extra,
+          form: extra.source === "ads-landing" ? "Ads landing page" : "Website",
+          submitted_at: new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }),
+        })
+      : Promise.resolve(false),
   ]);
 
   if (!inSupabase && !inSheet) {
     return Response.json(
-      { error: "Could not submit right now. Please call us instead." },
+      { error: `Could not submit right now. Please email us at ${site.email}.` },
       { status: process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.GOOGLE_SHEETS_WEBHOOK_URL ? 502 : 503 },
     );
   }

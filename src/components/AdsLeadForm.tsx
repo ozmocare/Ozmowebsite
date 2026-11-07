@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState, type FormEvent, type ReactNode } from "react";
+import { useEffect, useState, type FormEvent, type ReactNode } from "react";
 import { ArrowRight } from "lucide-react";
 import { openLocations } from "@/lib/site";
 
@@ -29,6 +29,8 @@ function Field({ label, children }: { label: string; children: ReactNode }) {
 /** Short call-back form for Google Ads traffic. Redirects to /thank-you, where the conversion fires. */
 export default function AdsLeadForm({ id }: { id?: string }) {
   const router = useRouter();
+  // Load the thank-you page ahead of time so the switch after submitting is instant.
+  useEffect(() => router.prefetch("/thank-you"), [router]);
   const [error, setError] = useState("");
   const [sending, setSending] = useState(false);
 

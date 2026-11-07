@@ -1,3 +1,4 @@
+import { after } from "next/server";
 import { site } from "@/lib/site";
 // Stores website form submissions (membership/contact and franchise enquiries).
 // Every lead goes to the Supabase `leads` table (supabase/schema.sql) AND, when configured,
@@ -24,18 +25,25 @@ async function saveToSupabase(lead: Record<string, string | null>) {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   if (!url || !key) return false;
-  const res = await fetch(`${url}/rest/v1/leads`, {
-    method: "POST",
-    headers: {
-      apikey: key,
-      Authorization: `Bearer ${key}`,
-      "Content-Type": "application/json",
-      Prefer: "return=minimal",
-    },
-    body: JSON.stringify(lead),
-  });
-  if (!res.ok) console.error("Supabase insert failed:", res.status, await res.text());
-  return res.ok;
+  try {
+    const res = await fetch(`${url}/rest/v1/leads`, {
+      method: "POST",
+      headers: {
+        apikey: key,
+        Authorization: `Bearer ${key}`,
+        "Content-Type": "application/json",
+        Prefer: "return=minimal",
+      },
+      body: JSON.stringify(lead),
+      signal: AbortSignal.timeout(6000),
+    });
+    if (!res.ok) console.error("Supabase insert failed:", res.status, await res.text());
+    return res.ok;
+  } catch (err) {
+    // Unreachable or paused project: fall back to the Google Sheet.
+    console.error("Supabase insert failed:", err);
+    return false;
+  }
 }
 
 async function saveToSheet(row: Record<string, string | null>) {
@@ -46,7 +54,7 @@ async function saveToSheet(row: Record<string, string | null>) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ...row, secret: process.env.GOOGLE_SHEETS_SECRET ?? "" }),
-      signal: AbortSignal.timeout(8000),
+      signal: AbortSignal.timeout(20000),
     });
     const json = await res.json().catch(() => null);
     if (!res.ok || !json?.ok) {
@@ -107,20 +115,25 @@ export async function POST(request: Request) {
 
   // The Google Sheet is for membership enquiries only. Franchise enquiries are kept in Supabase
   // until OZMO sets up a separate franchise lead flow.
+  const sheetRow = {
+    ...lead,
+    ...extra,
+    form: extra.source === "ads-landing" ? "Ads landing page" : "Website",
+    submitted_at: new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }),
+  };
   const toSheet = type !== "franchise";
-  const [inSupabase, inSheet] = await Promise.all([
-    saveToSupabase(supabaseLead),
-    toSheet
-      ? saveToSheet({
-          ...lead,
-          ...extra,
-          form: extra.source === "ads-landing" ? "Ads landing page" : "Website",
-          submitted_at: new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }),
-        })
-      : Promise.resolve(false),
-  ]);
 
-  if (!inSupabase && !inSheet) {
+  // Supabase answers in well under a second; Google Apps Script often takes several seconds.
+  // Once the lead is safely in Supabase, reply straight away and write the Sheet row after the response.
+  const inSupabase = await saveToSupabase(supabaseLead);
+  if (inSupabase) {
+    if (toSheet) after(() => saveToSheet(sheetRow));
+    return Response.json({ ok: true });
+  }
+
+  // Supabase is unavailable: the Sheet is the only copy, so wait for it before confirming.
+  const inSheet = toSheet && (await saveToSheet(sheetRow));
+  if (!inSheet) {
     return Response.json(
       { error: `Could not submit right now. Please email us at ${site.email}.` },
       { status: process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.GOOGLE_SHEETS_WEBHOOK_URL ? 502 : 503 },

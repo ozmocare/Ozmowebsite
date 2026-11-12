@@ -13,8 +13,10 @@ export default function Transformations() {
 
   const rows = [
     { label: "Weight", values: t.weight, unit: "kg" },
-    { label: "Body fat", values: t.bodyFat, unit: "%" },
+    ...(t.bodyFat ? [{ label: "Body fat", values: t.bodyFat, unit: "%" }] : []),
   ];
+  const lost = t.weight[0] - t.weight[1];
+  const title = t.name ?? "Client transformation";
 
   return (
     <section className="section overflow-hidden">
@@ -48,11 +50,14 @@ export default function Transformations() {
 
         <div key={index} className="mt-12 grid items-center gap-10 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
           <div className="card p-7 md:p-10">
-            <p className="text-sm font-semibold uppercase tracking-wider text-white/50">Member</p>
+            <p className="text-sm font-semibold uppercase tracking-wider text-white/50">OZMO client</p>
             <p className="mt-1 font-display text-4xl font-black uppercase">
-              {t.name}, <span className="text-white/50">{t.age}</span>
+              {title}
+              {t.age && <span className="text-white/50">, {t.age}</span>}
             </p>
-            <p className="chip mt-5 border-brand text-brand">{t.duration} program</p>
+            <p className="chip mt-5 border-brand text-brand">
+              {t.duration ? `${t.duration} program` : `${lost} kg lost`}
+            </p>
 
             <dl className="mt-8 space-y-6">
               {rows.map((r) => (
@@ -82,7 +87,7 @@ export default function Transformations() {
               <figure key={p.label} className="relative">
                 <Photo
                   src={p.src}
-                  alt={`${t.name} ${p.label.toLowerCase()} training at OZMO`}
+                  alt={`OZMO client ${p.label.toLowerCase()}: ${p.label === "Before" ? t.weight[0] : t.weight[1]} kg`}
                   sizes="(min-width: 1024px) 30vw, 50vw"
                   className="aspect-[3/4] rounded-2xl"
                 />

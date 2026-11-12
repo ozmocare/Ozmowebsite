@@ -55,9 +55,13 @@ export function LocationCard({ l }: { l: Location }) {
             </li>
             <li className="flex gap-3">
               <Phone size={17} className="mt-0.5 shrink-0 text-brand" />
-              <a href={telHref(l.phone!)} className="hover:text-brand">
-                {l.phone}
-              </a>
+              {l.phone ? (
+                <a href={telHref(l.phone)} className="hover:text-brand">
+                  {l.phone}
+                </a>
+              ) : (
+                "Number coming soon"
+              )}
             </li>
             <li className="flex gap-3">
               <Clock size={17} className="mt-0.5 shrink-0 text-brand" /> {site.hours}

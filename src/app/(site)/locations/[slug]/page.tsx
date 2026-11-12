@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowUpRight, Clock, MapPin, Navigation, Phone } from "lucide-react";
+import { ArrowUpRight, Clock, Mail, MapPin, Navigation, Phone } from "lucide-react";
 import Faq from "@/components/Faq";
 import JsonLd, { breadcrumbSchema, gymSchema } from "@/components/JsonLd";
 import { JoinForm } from "@/components/LeadForms";
@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: PageProps<"/locations/[slug]"
   const l = find(slug);
   if (!l) return {};
   const title = `Gym in ${l.area}, ${l.city} | ${l.brand ?? "OZMO Gym"}`;
-  const description = `${l.brand ?? "OZMO Gym"} ${l.area}: ${fullAddress(l)}. Call ${l.phone}. Open 5 a.m.–11 p.m. daily with modern equipment, expert trainers and steam & spa. Enquire about membership today.`;
+  const description = `${l.brand ?? "OZMO Gym"} ${l.area}: ${fullAddress(l)}.${l.phone ? ` Call ${l.phone}.` : ""} Open 5 a.m.–11 p.m. daily with modern equipment, expert trainers and steam & spa. Enquire about membership today.`;
   return {
     title: { absolute: title },
     description,
@@ -52,7 +52,9 @@ export default async function LocationPage({ params }: PageProps<"/locations/[sl
   const others = openLocations.filter((o) => o.slug !== l.slug).slice(0, 3);
   const facts = [
     { icon: MapPin, label: "Address", value: fullAddress(l) },
-    { icon: Phone, label: "Phone", value: l.phone!, href: telHref(l.phone!) },
+    l.phone
+      ? { icon: Phone, label: "Phone", value: l.phone, href: telHref(l.phone) }
+      : { icon: Mail, label: "Email", value: site.email, href: `mailto:${site.email}` },
     { icon: Clock, label: "Opening hours", value: "5 a.m. – 11 p.m., Monday to Sunday" },
   ];
 
@@ -85,9 +87,11 @@ export default async function LocationPage({ params }: PageProps<"/locations/[sl
           <a href="#join" className="btn-primary">
             Enquire about membership
           </a>
-          <a href={telHref(l.phone!)} className="btn-ghost">
-            <Phone size={17} /> {l.phone}
-          </a>
+          {l.phone && (
+            <a href={telHref(l.phone)} className="btn-ghost">
+              <Phone size={17} /> {l.phone}
+            </a>
+          )}
         </div>
       </PageHero>
 

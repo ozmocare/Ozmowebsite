@@ -53,7 +53,7 @@ export type Location = {
 };
 
 // Branches with a street address get their own page at /locations/[slug].
-// TODO (needs details from OZMO): Jalandhar Bypass, Pakhowal Road, Jagraon — address, phone, photo.
+// Still missing: Pakhowal Road photo, Jagraon phone number.
 export const locations: Location[] = [
   {
     slug: "south-city",
@@ -121,9 +121,38 @@ export const locations: Location[] = [
     phone: "+91 98153 83875",
     image: "/images/branch-fieldganj.jpg",
   },
-  { slug: "jalandhar-bypass", area: "Jalandhar Bypass", city: "Ludhiana", status: "open" },
-  { slug: "pakhowal-road", area: "Pakhowal Road", city: "Ludhiana", status: "open" },
-  { slug: "jagraon", area: "Jagraon", city: "Jagraon", status: "open" },
+  // Jalandhar Bypass, Pakhowal Road and Jagraon details are from their Google Business Profiles (Nov 2026).
+  {
+    slug: "jalandhar-bypass",
+    area: "Jalandhar Bypass",
+    city: "Ludhiana",
+    status: "open",
+    brand: "OZMO Luxe Gym & Spa",
+    street: "6th Floor, Global Business Park, near Jalandhar Bypass Chowk, Sarop Nagar",
+    postalCode: "141008",
+    phone: "+91 98889 89301",
+    image: "/images/branch-jalandhar-bypass.jpg",
+  },
+  {
+    slug: "pakhowal-road",
+    area: "Pakhowal Road",
+    city: "Ludhiana",
+    status: "open",
+    brand: "OZMO Gym",
+    street: "Glamton Plaza, opposite Omaxe Flats, Pakhowal Road",
+    postalCode: "142022",
+    phone: "+91 98558 86565",
+  },
+  {
+    slug: "jagraon",
+    area: "Jagraon",
+    city: "Jagraon",
+    status: "open",
+    brand: "OZMO Gym & Spa",
+    street: "Dr Hari Singh Road, Atma Nagar, Karnail Gate Muhalla",
+    postalCode: "142026",
+    image: "/images/branch-jagraon.jpg",
+  },
 
   { slug: "chandigarh-road", area: "Chandigarh Road", city: "Ludhiana", status: "soon" },
   { slug: "gill-road", area: "Gill Road", city: "Ludhiana", status: "soon" },
@@ -180,33 +209,23 @@ export const testimonials = [
 ];
 
 // Slides 2 and 3 are placeholders — replace with real member results.
-export const transformations = [
+export type Transformation = {
+  /** Shown as the heading; leave out to show "Client transformation" (no names without consent). */
+  name?: string;
+  age?: number;
+  duration?: string;
+  weight: [number, number];
+  bodyFat?: [number, number];
+  before: string;
+  after: string;
+};
+
+// Real OZMO client results only. Add more objects here as clients share photos and consent.
+export const transformations: Transformation[] = [
   {
-    name: "David",
-    age: 32,
-    duration: "9 weeks",
-    weight: [84, 75],
-    bodyFat: [27, 15],
-    before: "/images/transform-before.jpg",
-    after: "/images/transform-after.jpg",
-  },
-  {
-    name: "Member name",
-    age: 28,
-    duration: "12 weeks",
-    weight: [92, 80],
-    bodyFat: [30, 18],
-    before: "/images/transform-before.jpg",
-    after: "/images/transform-after.jpg",
-  },
-  {
-    name: "Member name",
-    age: 35,
-    duration: "16 weeks",
-    weight: [88, 76],
-    bodyFat: [29, 16],
-    before: "/images/transform-before.jpg",
-    after: "/images/transform-after.jpg",
+    weight: [90, 70],
+    before: "/images/client-1-before.jpg",
+    after: "/images/client-1-after.jpg",
   },
 ];
 

@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { offerEnquiryHref, type Offer } from "@/lib/offers-shared";
 
-const SEEN_KEY = "ozmo-offers-seen";
 const DELAY_MS = 1500;
 
 const today = () => new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" }); // YYYY-MM-DD
@@ -13,35 +13,33 @@ const endsLabel = (d: string) =>
   new Date(`${d}T00:00:00`).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" });
 
 /**
- * Offer pop-up shown once per visit, a moment after the page opens.
+ * Offer pop-up, shown a moment after the page opens: on every page load or refresh,
+ * and every time the visitor comes back to the homepage.
  * Offers come from /admin; when several are live the visitor can flip between them.
  */
 export default function OfferPopup({ offers: all }: { offers: Offer[] }) {
+  const pathname = usePathname();
   const [offers, setOffers] = useState<Offer[]>([]);
   const [open, setOpen] = useState(false);
   const [index, setIndex] = useState(0);
   const closeRef = useRef<HTMLButtonElement>(null);
+  const firstLoad = useRef(true);
 
   // Runs in the browser only: today's date decides which offers are still running.
   useEffect(() => {
+    // Show on the first load of any page (incl. refresh), and on every visit to the homepage.
+    if (!firstLoad.current && pathname !== "/") return;
     // Hide offers that ended since the cached list was fetched.
     const live = all.filter((o) => !o.ends_on || o.ends_on >= today());
-    const signature = live.map((o) => o.id + o.updated_at).join("|");
-    if (!signature) return;
-    let seen = "";
-    try {
-      seen = sessionStorage.getItem(SEEN_KEY) ?? "";
-    } catch {}
-    if (seen === signature) return; // already shown this visit (and the offers haven't changed)
+    if (live.length === 0) return;
     const t = setTimeout(() => {
+      firstLoad.current = false;
       setOffers(live);
+      setIndex(0);
       setOpen(true);
-      try {
-        sessionStorage.setItem(SEEN_KEY, signature); // once shown, don't show again this visit
-      } catch {}
     }, DELAY_MS);
     return () => clearTimeout(t);
-  }, [all]);
+  }, [all, pathname]);
 
   const close = () => setOpen(false);
 

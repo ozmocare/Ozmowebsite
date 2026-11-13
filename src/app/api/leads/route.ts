@@ -118,7 +118,7 @@ export async function POST(request: Request) {
   const sheetRow = {
     ...lead,
     ...extra,
-    form: extra.source === "ads-landing" ? "Ads landing page" : "Website",
+    form: extra.source === "ads-landing" ? "Ads landing page" : extra.source === "offer-popup" ? "Offer pop-up" : "Website",
     submitted_at: new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }),
   };
   const toSheet = type !== "franchise";

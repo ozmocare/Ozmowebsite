@@ -1,7 +1,8 @@
 import { revalidateTag } from "next/cache";
 import { BLOG_TAG } from "@/lib/blog";
+import { OFFERS_TAG } from "@/lib/offers";
 
-// Called by /admin after a post is saved, published or deleted, so the public blog updates immediately.
+// Called by /admin after a post or offer is saved, published or deleted, so the public site updates immediately.
 // Only signed-in blog authors can trigger it: their Supabase access token is checked against is_blog_author().
 
 export async function POST(request: Request) {
@@ -18,5 +19,6 @@ export async function POST(request: Request) {
   if (!res.ok || (await res.json()) !== true) return Response.json({ ok: false }, { status: 403 });
 
   revalidateTag(BLOG_TAG, { expire: 0 });
+  revalidateTag(OFFERS_TAG, { expire: 0 });
   return Response.json({ ok: true });
 }

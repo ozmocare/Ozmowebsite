@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState, type FormEvent } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { ExternalLink, FileText, LogOut, Pencil, Plus, Search } from "lucide-react";
 import Logo from "../Logo";
+import OffersAdmin from "./OffersAdmin";
 import PostEditor from "./PostEditor";
 import { getSupabase } from "./supabase";
 import { formatDate, type Post } from "@/lib/blog-shared";
@@ -58,6 +59,7 @@ export default function BlogAdmin() {
 }
 
 function Portal({ email }: { email: string }) {
+  const [section, setSection] = useState<"blog" | "offers">("blog");
   const [view, setView] = useState<View>({ kind: "list" });
   const [posts, setPosts] = useState<Post[] | null>(null);
   const [error, setError] = useState("");
@@ -88,9 +90,25 @@ function Portal({ email }: { email: string }) {
       <header className="sticky top-0 z-30 border-b border-white/10 bg-ink/95 backdrop-blur">
         <div className="wrap flex h-16 items-center gap-4">
           <Logo className="h-8 w-auto" />
-          <span className="hidden font-display text-sm font-extrabold uppercase tracking-widest text-white/50 sm:inline">
-            Blog portal
-          </span>
+          <nav className="flex gap-1 rounded-full border border-white/10 p-1 text-sm font-bold">
+            {(
+              [
+                ["blog", "Blog posts"],
+                ["offers", "Offers"],
+              ] as const
+            ).map(([key, text]) => (
+              <button
+                key={key}
+                onClick={() => {
+                  setSection(key);
+                  setView({ kind: "list" });
+                }}
+                className={`rounded-full px-4 py-1.5 transition ${section === key ? "bg-brand text-ink" : "text-white/70 hover:text-white"}`}
+              >
+                {text}
+              </button>
+            ))}
+          </nav>
           <div className="ml-auto flex items-center gap-3 text-sm">
             <Link href="/blog" target="_blank" className="hidden items-center gap-1 text-white/70 hover:text-brand sm:flex">
               View blog <ExternalLink size={14} />
@@ -106,7 +124,9 @@ function Portal({ email }: { email: string }) {
         </div>
       </header>
 
-      {view.kind === "edit" ? (
+      {section === "offers" ? (
+        <OffersAdmin />
+      ) : view.kind === "edit" ? (
         <PostEditor
           post={view.post}
           authorEmail={email}

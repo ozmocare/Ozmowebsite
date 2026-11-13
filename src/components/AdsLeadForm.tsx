@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState, type FormEvent, type ReactNode } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Tag } from "lucide-react";
 import { openLocations } from "@/lib/site";
 
 const interests = ["Gym membership", "Personal training", "Yoga", "Kickfit", "Swimming", "Steam & spa"];
@@ -33,6 +33,14 @@ export default function AdsLeadForm({ id }: { id?: string }) {
   useEffect(() => router.prefetch("/thank-you"), [router]);
   const [error, setError] = useState("");
   const [sending, setSending] = useState(false);
+  // Set when the visitor came from the offer pop-up (/enquire?offer=…).
+  const [offer, setOffer] = useState("");
+  useEffect(() => {
+    const o = new URLSearchParams(window.location.search).get("offer")?.trim().slice(0, 150) ?? "";
+    // Read once on mount; the page itself is static, so the offer comes from the browser URL.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (o) setOffer(o);
+  }, []);
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -57,7 +65,8 @@ export default function AdsLeadForm({ id }: { id?: string }) {
           ...data,
           phone: `+91 ${digits.slice(0, 5)} ${digits.slice(5)}`,
           type: "contact",
-          source: "ads-landing",
+          source: offer ? "offer-popup" : "ads-landing",
+          ...(offer && { message: `Offer: ${offer}` }),
           page: window.location.pathname + window.location.search,
           ...tracking,
         }),
@@ -77,6 +86,14 @@ export default function AdsLeadForm({ id }: { id?: string }) {
   return (
     <form id={id} onSubmit={onSubmit} className="space-y-4">
       <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden />
+      {offer && (
+        <p className="flex items-start gap-3 rounded-xl border border-brand/40 bg-brand/10 px-4 py-3 text-sm text-white/90">
+          <Tag size={18} className="mt-0.5 shrink-0 text-brand" />
+          <span>
+            <span className="font-bold text-brand">Offer selected:</span> {offer}. Our team will call you with the details.
+          </span>
+        </p>
+      )}
       <Field label="Your name">
         <input name="name" required placeholder="Full name" className="field" autoComplete="name" />
       </Field>

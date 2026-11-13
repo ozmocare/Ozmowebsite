@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import OfferPopup from "@/components/OfferPopup";
@@ -11,7 +12,10 @@ export default async function SiteLayout({ children }: LayoutProps<"/">) {
       <Header />
       <main className="flex-1">{children}</main>
       <Footer />
-      <OfferPopup offers={offers} />
+      {/* Suspense: the pop-up reads the current URL, which is only known in the browser. */}
+      <Suspense fallback={null}>
+        <OfferPopup offers={offers} />
+      </Suspense>
     </>
   );
 }

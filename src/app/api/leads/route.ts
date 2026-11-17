@@ -2,7 +2,8 @@ import { after } from "next/server";
 import { site } from "@/lib/site";
 // Stores website form submissions (membership/contact and franchise enquiries).
 // Every lead goes to the Supabase `leads` table (supabase/schema.sql) AND, when configured,
-// to the OZMO Google Sheet via an Apps Script web app (google-sheets/Code.gs).
+// to a Google Sheet via an Apps Script web app: membership/contact leads to the OZMO leads sheet
+// (google-sheets/Code.gs), franchise enquiries to the franchise sheet (google-sheets/Franchise.gs).
 
 const TYPES = ["franchise", "contact"] as const;
 const FIELDS = ["name", "phone", "email", "service", "branch", "city", "budget", "message"] as const;
@@ -46,24 +47,30 @@ async function saveToSupabase(lead: Record<string, string | null>) {
   }
 }
 
-async function saveToSheet(row: Record<string, string | null>) {
-  const url = process.env.GOOGLE_SHEETS_WEBHOOK_URL;
+type Kind = "franchise" | "contact";
+const sheetConfig = (kind: Kind) =>
+  kind === "franchise"
+    ? { url: process.env.GOOGLE_SHEETS_FRANCHISE_WEBHOOK_URL, secret: process.env.GOOGLE_SHEETS_FRANCHISE_SECRET }
+    : { url: process.env.GOOGLE_SHEETS_WEBHOOK_URL, secret: process.env.GOOGLE_SHEETS_SECRET };
+
+async function saveToSheet(kind: Kind, row: Record<string, string | null>) {
+  const { url, secret } = sheetConfig(kind);
   if (!url) return false;
   try {
     const res = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...row, secret: process.env.GOOGLE_SHEETS_SECRET ?? "" }),
+      body: JSON.stringify({ ...row, secret: secret ?? "" }),
       signal: AbortSignal.timeout(20000),
     });
     const json = await res.json().catch(() => null);
     if (!res.ok || !json?.ok) {
-      console.error("Google Sheet append failed:", res.status, json);
+      console.error(`Google Sheet (${kind}) append failed:`, res.status, json);
       return false;
     }
     return true;
   } catch (err) {
-    console.error("Google Sheet append error:", err);
+    console.error(`Google Sheet (${kind}) append error:`, err);
     return false;
   }
 }
@@ -113,30 +120,27 @@ export async function POST(request: Request) {
     ? { ...lead, message: [lead.message, ...tracking].filter(Boolean).join(" · ").slice(0, 4000) }
     : lead;
 
-  // The Google Sheet is for membership enquiries only. Franchise enquiries are kept in Supabase
-  // until OZMO sets up a separate franchise lead flow.
   const sheetRow = {
     ...lead,
     ...extra,
-    form: extra.source === "ads-landing" ? "Ads landing page" : extra.source === "offer-popup" ? "Offer pop-up" : "Website",
+    form: type === "franchise" ? "Franchise" : extra.source === "ads-landing" ? "Ads landing page" : extra.source === "offer-popup" ? "Offer pop-up" : "Website",
     submitted_at: new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }),
   };
-  const toSheet = type !== "franchise";
 
   // Supabase answers in well under a second; Google Apps Script often takes several seconds.
   // Once the lead is safely in Supabase, reply straight away and write the Sheet row after the response.
   const inSupabase = await saveToSupabase(supabaseLead);
   if (inSupabase) {
-    if (toSheet) after(() => saveToSheet(sheetRow));
+    after(() => saveToSheet(type, sheetRow));
     return Response.json({ ok: true });
   }
 
   // Supabase is unavailable: the Sheet is the only copy, so wait for it before confirming.
-  const inSheet = toSheet && (await saveToSheet(sheetRow));
+  const inSheet = await saveToSheet(type, sheetRow);
   if (!inSheet) {
     return Response.json(
       { error: `Could not submit right now. Please email us at ${site.email}.` },
-      { status: process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.GOOGLE_SHEETS_WEBHOOK_URL ? 502 : 503 },
+      { status: process.env.NEXT_PUBLIC_SUPABASE_URL || sheetConfig(type).url ? 502 : 503 },
     );
   }
 

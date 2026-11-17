@@ -64,3 +64,16 @@ allows about 100 a day on a normal account, 1,500 on Google Workspace).
 5. **Deploy → Manage deployments → ✏️ Edit → Version: New version → Deploy.** (Same URL, nothing to change in Vercel.)
 
 Franchise enquiries don't go to the sheet, so they don't trigger this email.
+
+## Franchise leads → separate sheet
+
+Franchise enquiries (the `/franchise` form) go to their own spreadsheet using [`Franchise.gs`](./Franchise.gs),
+with the same email alert ("New franchise enquiry: Name – City"). Set it up exactly like the membership sheet
+(sections 1–2 above, plus the email steps), in the franchise spreadsheet. Then add to Vercel:
+
+| Name | Value |
+| --- | --- |
+| `GOOGLE_SHEETS_FRANCHISE_WEBHOOK_URL` | the franchise script's Web app URL |
+| `GOOGLE_SHEETS_FRANCHISE_SECRET` | the SECRET in `Franchise.gs` |
+
+and redeploy. Until those are set, franchise enquiries are still saved in Supabase.

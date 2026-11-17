@@ -321,7 +321,7 @@ function OfferEditor({ offer, onClose }: { offer: Offer | null; onClose: () => v
             {d.image ? (
               <div className="relative mt-3 overflow-hidden rounded-xl">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={d.image} alt="" className="aspect-[4/3] w-full object-cover" />
+                <img src={d.image} alt="" className="aspect-[4/5] w-full object-cover" />
                 <button
                   onClick={() => set("image", "")}
                   aria-label="Remove image"
@@ -331,14 +331,14 @@ function OfferEditor({ offer, onClose }: { offer: Offer | null; onClose: () => v
                 </button>
               </div>
             ) : (
-              <label className="mt-3 flex aspect-[4/3] cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-white/20 text-white/50 hover:border-brand hover:text-brand">
+              <label className="mt-3 flex aspect-[4/5] cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-white/20 text-white/50 hover:border-brand hover:text-brand">
                 <Upload size={22} />
                 <span className="text-sm font-semibold">{uploading ? "Uploading…" : "Upload an image"}</span>
                 <input type="file" accept="image/*" className="hidden" onChange={onPick} disabled={uploading} />
               </label>
             )}
             <p className="mt-2 text-xs text-white/40">
-              Shown at 4:3 (e.g. 1200 × 900). Keep important text away from the edges.
+              Best size: 1080 × 1350 (4:5 portrait, same as an Instagram post).
             </p>
           </div>
 

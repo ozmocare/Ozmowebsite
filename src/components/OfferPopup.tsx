@@ -71,7 +71,7 @@ export default function OfferPopup({ offers: all }: { offers: Offer[] }) {
         aria-modal="true"
         aria-labelledby="offer-title"
         onClick={(e) => e.stopPropagation()}
-        className="card relative max-h-[92svh] w-full max-w-md overflow-y-auto shadow-2xl animate-[offer-in_.35s_ease-out]"
+        className="card relative max-h-[92svh] w-full max-w-[max(17rem,min(26rem,calc((92svh-18rem)*0.8)))] overflow-y-auto shadow-2xl animate-[offer-in_.35s_ease-out]"
       >
         <button
           ref={closeRef}
@@ -83,7 +83,7 @@ export default function OfferPopup({ offers: all }: { offers: Offer[] }) {
           <X size={20} />
         </button>
 
-        <div className="relative aspect-[4/3] bg-surface-2">
+        <div className="relative aspect-[4/5] bg-surface-2">
           {o.image ? (
             // Offer images are uploaded through /admin to Supabase Storage.
             // eslint-disable-next-line @next/next/no-img-element
@@ -120,8 +120,8 @@ export default function OfferPopup({ offers: all }: { offers: Offer[] }) {
           )}
         </div>
 
-        <div className="p-6 md:p-7">
-          <h2 id="offer-title" className="font-display text-2xl font-black uppercase leading-tight md:text-3xl">
+        <div className="p-5">
+          <h2 id="offer-title" className="font-display text-xl font-black uppercase leading-tight sm:text-2xl">
             {o.title}
           </h2>
           {o.description && <p className="mt-3 whitespace-pre-line leading-7 text-white/70">{o.description}</p>}
@@ -129,7 +129,7 @@ export default function OfferPopup({ offers: all }: { offers: Offer[] }) {
             <p className="mt-3 text-sm font-semibold text-brand">Valid till {endsLabel(o.ends_on)}</p>
           )}
 
-          <Link href={offerEnquiryHref(o)} onClick={close} className="btn-primary mt-6 w-full">
+          <Link href={offerEnquiryHref(o)} onClick={close} className="btn-primary mt-5 w-full">
             {o.cta_label || "Claim offer"} <ArrowRight size={18} />
           </Link>
           <button type="button" onClick={close} className="mt-3 w-full text-sm text-white/50 hover:text-white">

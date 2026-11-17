@@ -14,6 +14,9 @@ const SHEET_NAME = "Leads";
 // The OZMO leads spreadsheet: the long ID in its link (docs.google.com/spreadsheets/d/<ID>/edit).
 // Leads always go here, even if this script was created from a different file.
 const SPREADSHEET_ID = "PASTE-THE-SHEET-ID-HERE";
+// Who gets an email for every new lead. Separate several addresses with commas.
+// Leave empty ("") to turn the emails off.
+const NOTIFY_EMAILS = "PASTE-EMAIL@example.com";
 
 // Column order in the sheet. Keys are the fields the website sends.
 const COLUMNS = [
@@ -52,10 +55,74 @@ function doPost(e) {
     } finally {
       lock.releaseLock();
     }
+    notifyNewLead(data); // after the row is saved; a failed email never loses the lead
     return reply({ ok: true, tab: SHEET_NAME, sheet: SpreadsheetApp.openById(SPREADSHEET_ID).getName() });
   } catch (err) {
     return reply({ ok: false, error: String(err) });
   }
+}
+
+/** Emails the OZMO team a summary of the new lead, with tap-to-call and WhatsApp links. */
+function notifyNewLead(data) {
+  if (!NOTIFY_EMAILS || NOTIFY_EMAILS.indexOf("@example.com") !== -1) return;
+  try {
+    const esc = (v) =>
+      String(v == null ? "" : v).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+    const name = String(data.name || "Someone").trim();
+    const phone = String(data.phone || "").replace(/[^\d+]/g, "");
+    const digits = phone.replace(/\D/g, "");
+    const waNumber = digits.length === 10 ? "91" + digits : digits;
+    const fields = [
+      ["Name", data.name],
+      ["Phone", data.phone],
+      ["Email", data.email],
+      ["Branch", data.branch],
+      ["Interested in", data.service],
+      ["Call back time", data.callback],
+      ["Message", data.message],
+      ["Form", data.form],
+      ["Source", [data.utm_source, data.utm_campaign].filter(Boolean).join(" / ")],
+      ["Received", data.submitted_at],
+    ].filter(([, v]) => v);
+
+    const rows = fields
+      .map(([k, v]) => `<tr><td style="padding:6px 12px 6px 0;color:#666;white-space:nowrap;vertical-align:top">${k}</td><td style="padding:6px 0;font-weight:600">${esc(v)}</td></tr>`)
+      .join("");
+    const sheetUrl = "https://docs.google.com/spreadsheets/d/" + SPREADSHEET_ID + "/edit";
+    const button = (href, label, bg) =>
+      `<a href="${href}" style="display:inline-block;margin:0 8px 8px 0;padding:10px 18px;border-radius:6px;background:${bg};color:#111;font-weight:700;text-decoration:none">${label}</a>`;
+    const html =
+      `<div style="font-family:Arial,sans-serif;font-size:15px;color:#111">` +
+      `<h2 style="margin:0 0 12px">New website lead</h2>` +
+      `<table style="border-collapse:collapse;margin-bottom:16px">${rows}</table>` +
+      (phone ? button("tel:" + phone, "Call " + esc(data.phone), "#fcee00") : "") +
+      (waNumber ? button("https://wa.me/" + waNumber, "WhatsApp", "#25d366") : "") +
+      button(sheetUrl, "Open leads sheet", "#e5e5e5") +
+      `</div>`;
+    const text = fields.map(([k, v]) => k + ": " + v).join("\n") + "\n\nLeads sheet: " + sheetUrl;
+
+    MailApp.sendEmail({
+      to: NOTIFY_EMAILS,
+      subject: "New lead: " + name + (data.branch ? " – " + data.branch : ""),
+      body: text,
+      htmlBody: html,
+      name: "OZMO Website Leads",
+    });
+  } catch (err) {
+    console.error("Lead email failed: " + err);
+  }
+}
+
+/** Run once from the editor (▶ Run → testEmail) to approve email permission and send a sample. */
+function testEmail() {
+  notifyNewLead({
+    name: "Test Lead",
+    phone: "9876543210",
+    branch: "Dugri",
+    service: "Gym",
+    form: "Test",
+    submitted_at: new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }),
+  });
 }
 
 function getSheet() {

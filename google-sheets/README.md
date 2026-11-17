@@ -49,3 +49,18 @@ Message · UTM source · UTM medium · UTM campaign · Keyword · Ad content · 
 
 The **Status** column starts as `New` — the team can change it to Called / Joined / Not interested to track
 follow-ups. Add a filter (Data → Create a filter) to sort by branch or status.
+
+## Email alert for every new lead
+
+`Code.gs` also emails the OZMO team each time a lead is added. The email shows the lead's details, with **Call**,
+**WhatsApp** and **Open leads sheet** buttons. It's sent from the Google account that owns the script (Gmail
+allows about 100 a day on a normal account, 1,500 on Google Workspace).
+
+1. In Apps Script, copy your current `SECRET` and `SPREADSHEET_ID` values somewhere safe.
+2. Replace everything in `Code.gs` with the new file and put those two values back.
+3. Set `NOTIFY_EMAILS` to the address(es) that should get alerts, e.g. `"owner@gmail.com, manager@gmail.com"`.
+4. Save. In the function dropdown pick **testEmail** → **▶ Run** → allow the new "send email" permission.
+   A sample "New lead: Test Lead – Dugri" email arrives.
+5. **Deploy → Manage deployments → ✏️ Edit → Version: New version → Deploy.** (Same URL, nothing to change in Vercel.)
+
+Franchise enquiries don't go to the sheet, so they don't trigger this email.

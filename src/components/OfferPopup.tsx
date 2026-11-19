@@ -61,9 +61,13 @@ export default function OfferPopup({ offers: all }: { offers: Offer[] }) {
   const count = offers.length;
   const go = (d: number) => setIndex((i) => (i + d + count) % count);
 
+  // A banner image already carries the offer's headline and design, so show it whole with just the
+  // buttons under it. Without an image, fall back to the text card.
+  const banner = !!o.image;
+
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-end justify-center bg-black/75 p-4 backdrop-blur-sm sm:items-center"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm"
       onClick={close}
     >
       <div
@@ -71,84 +75,94 @@ export default function OfferPopup({ offers: all }: { offers: Offer[] }) {
         aria-modal="true"
         aria-labelledby="offer-title"
         onClick={(e) => e.stopPropagation()}
-        className="card relative max-h-[92svh] w-full max-w-[max(17rem,min(26rem,calc((92svh-18rem)*0.8)))] overflow-y-auto shadow-2xl animate-[offer-in_.35s_ease-out]"
+        // Width follows the screen height so banner + buttons always fit without scrolling.
+        className="relative flex w-full max-w-[max(14rem,min(26rem,calc((100svh-15rem)*0.8)))] flex-col animate-[offer-in_.35s_ease-out]"
       >
         <button
           ref={closeRef}
           type="button"
           onClick={close}
           aria-label="Close offer"
-          className="absolute right-3 top-3 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-ink/80 text-white transition hover:bg-brand hover:text-ink"
+          className="mb-2 ml-auto flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/15 text-white transition hover:bg-brand hover:text-ink"
         >
           <X size={20} />
         </button>
 
-        <div className="relative aspect-[4/5] bg-surface-2">
-          {o.image ? (
-            // Offer images are uploaded through /admin to Supabase Storage.
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={o.image} alt="" className="h-full w-full object-cover" />
-          ) : (
-            <div className="flex h-full items-center justify-center bg-[radial-gradient(circle_at_30%_20%,rgba(252,238,0,0.25),transparent_60%)]">
-              <span className="font-display text-5xl font-black uppercase text-brand">Offer</span>
-            </div>
-          )}
-          {o.badge && (
-            <span className="absolute left-4 top-4 rounded-full bg-brand px-3 py-1 text-xs font-black uppercase tracking-wider text-ink">
-              {o.badge}
-            </span>
-          )}
-          {count > 1 && (
-            <>
-              <button
-                type="button"
-                onClick={() => go(-1)}
-                aria-label="Previous offer"
-                className="absolute left-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-ink/70 text-white hover:bg-brand hover:text-ink"
-              >
-                <ChevronLeft size={18} />
-              </button>
-              <button
-                type="button"
-                onClick={() => go(1)}
-                aria-label="Next offer"
-                className="absolute right-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-ink/70 text-white hover:bg-brand hover:text-ink"
-              >
-                <ChevronRight size={18} />
-              </button>
-            </>
-          )}
-        </div>
-
-        <div className="p-5">
-          <h2 id="offer-title" className="font-display text-xl font-black uppercase leading-tight sm:text-2xl">
-            {o.title}
-          </h2>
-          {o.description && <p className="mt-3 whitespace-pre-line leading-7 text-white/70">{o.description}</p>}
-          {o.ends_on && (
-            <p className="mt-3 text-sm font-semibold text-brand">Valid till {endsLabel(o.ends_on)}</p>
-          )}
-
-          <Link href={offerEnquiryHref(o)} onClick={close} className="btn-primary mt-5 w-full">
-            {o.cta_label || "Claim offer"} <ArrowRight size={18} />
-          </Link>
-          <button type="button" onClick={close} className="mt-3 w-full text-sm text-white/50 hover:text-white">
-            No thanks
-          </button>
-
-          {count > 1 && (
-            <div className="mt-5 flex justify-center gap-2">
-              {offers.map((x, i) => (
+        <div className="card overflow-hidden shadow-2xl">
+          <div className="relative aspect-[4/5] bg-surface-2">
+            {banner ? (
+              // Offer images are uploaded through /admin to Supabase Storage.
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={o.image!} alt={o.title} className="h-full w-full object-cover" />
+            ) : (
+              <div className="flex h-full items-center justify-center bg-[radial-gradient(circle_at_30%_20%,rgba(252,238,0,0.25),transparent_60%)]">
+                <span className="font-display text-5xl font-black uppercase text-brand">Offer</span>
+              </div>
+            )}
+            {o.badge && !banner && (
+              <span className="absolute left-4 top-4 rounded-full bg-brand px-3 py-1 text-xs font-black uppercase tracking-wider text-ink">
+                {o.badge}
+              </span>
+            )}
+            {count > 1 && (
+              <>
                 <button
-                  key={x.id}
                   type="button"
-                  onClick={() => setIndex(i)}
-                  aria-label={`Show offer ${i + 1} of ${count}`}
-                  className={`h-1.5 rounded-full transition-all ${i === index ? "w-8 bg-brand" : "w-3 bg-white/25"}`}
-                />
-              ))}
-            </div>
-          )}
+                  onClick={() => go(-1)}
+                  aria-label="Previous offer"
+                  className="absolute left-2 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-ink/70 text-white hover:bg-brand hover:text-ink"
+                >
+                  <ChevronLeft size={18} />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => go(1)}
+                  aria-label="Next offer"
+                  className="absolute right-2 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-ink/70 text-white hover:bg-brand hover:text-ink"
+                >
+                  <ChevronRight size={18} />
+                </button>
+              </>
+            )}
+          </div>
+
+          <div className="max-h-[40svh] overflow-y-auto p-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <h2
+              id="offer-title"
+              className={banner ? "sr-only" : "font-display text-xl font-black uppercase leading-tight sm:text-2xl"}
+            >
+              {o.title}
+            </h2>
+            {o.description && (
+              <p className={banner ? "sr-only" : "mt-3 whitespace-pre-line leading-7 text-white/70"}>{o.description}</p>
+            )}
+            {o.ends_on && (
+              <p className={`text-center text-sm font-semibold text-brand ${banner ? "" : "mt-3"}`}>
+                Valid till {endsLabel(o.ends_on)}
+              </p>
+            )}
+
+            <Link href={offerEnquiryHref(o)} onClick={close} className={`btn-primary w-full ${banner && !o.ends_on ? "" : "mt-3"}`}>
+              {o.cta_label || "Claim offer"} <ArrowRight size={18} />
+            </Link>
+            <button type="button" onClick={close} className="mt-2 w-full text-sm text-white/50 hover:text-white">
+              No thanks
+            </button>
+
+            {count > 1 && (
+              <div className="mt-3 flex justify-center gap-2">
+                {offers.map((x, i) => (
+                  <button
+                    key={x.id}
+                    type="button"
+                    onClick={() => setIndex(i)}
+                    aria-label={`Show offer ${i + 1} of ${count}`}
+                    className={`h-1.5 rounded-full transition-all ${i === index ? "w-8 bg-brand" : "w-3 bg-white/25"}`}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
